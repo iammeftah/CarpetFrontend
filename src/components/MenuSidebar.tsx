@@ -7,24 +7,34 @@ interface MenuSidebarProps {
 
 const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose }) => {
     return (
-        <div className={`fixed top-0 left-0 h-full w-1/4 bg-white shadow-lg transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
+        <div
+            className={`fixed top-0 left-0 h-full w-full md:w-1/4 bg-white dark:bg-black shadow-lg transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
             <div className="p-6">
-                <button onClick={onClose} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <button onClick={onClose}
+                        className="absolute top-4 right-4 text-black dark:text-white hover:text-opacity-70">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
-                <h2 className="text-2xl font-bold mb-6">Menu</h2>
+                <h2 className="text-2xl font-bold mb-6 text-black dark:text-white">Menu</h2>
                 <nav>
                     <ul className="space-y-4">
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Nos produits</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Nouvelle Collection</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Tapis outlets</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Tapis personnalisés</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Nous contacter</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Nos magasins</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Nos services</a></li>
-                        <li><a href="#" className="text-gray-700 hover:text-primary">Blog</a></li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos produits</a>
+                        </li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nouvelle
+                            Collection</a></li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis outlets</a>
+                        </li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis
+                            personnalisés</a></li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nous contacter</a>
+                        </li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos magasins</a>
+                        </li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos services</a>
+                        </li>
+                        <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Blog</a></li>
                     </ul>
                 </nav>
             </div>
@@ -104,8 +114,6 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose }) => {
                     </a>
                 </div>
             </div>
-
-
         </div>
     );
 };

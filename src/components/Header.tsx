@@ -13,8 +13,16 @@ export default function Header() {
     const [isMenuSidebarOpen, setIsMenuSidebarOpen] = useState(false);
     const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const [cartProducts, setCartProducts] = useState<Product[]>([]);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [cartProducts] = useState<Product[]>([]);
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('darkMode');
+            return saved === 'true';
+        }
+        return false;
+    });
 
     useEffect(() => {
         if (isDarkMode) {
@@ -22,13 +30,22 @@ export default function Header() {
         } else {
             document.documentElement.classList.remove('dark');
         }
+        localStorage.setItem('darkMode', isDarkMode.toString());
     }, [isDarkMode]);
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode);
+    };
+
+    const toggleDropdown = (dropdown: string) => {
+        setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+    };
 
     return (
         <>
             <header className="flex flex-col items-center bg-white dark:bg-black px-4 py-4 shadow-sm sm:px-6 lg:px-8 h-auto sm:h-24 transition-all duration-300">
                 <div className="flex items-center justify-center w-full mb-4 sm:mb-0">
-                    <a className="text-2xl font-bold text-gray-900 dark:text-white flex items-center justify-center" href="/homepage">
+                    <a className="text-2xl font-bold text-black dark:text-white flex items-center justify-center" href="/homepage">
                         ARTCO
                     </a>
                 </div>
@@ -36,44 +53,82 @@ export default function Header() {
                     <nav className="hidden sm:flex space-x-6 items-center">
                         <div className="flex items-center">
                             <button
-                                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                                className="text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70"
                                 onClick={() => setIsMenuSidebarOpen(true)}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
-                                     viewBox="0 0 24 24"
-                                     stroke="currentColor">
+                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M4 6h16M4 12h16M4 18h16"/>
                                 </svg>
                             </button>
                         </div>
-                        <a className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
-                           href="/a-propos">
-                            À PROPOS
-                        </a>
-                        <a className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
-                           href="/nos-tapis">
-                            NOS TAPIS
-                        </a>
-                        <a className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
+                        <div className="relative">
+                            <button
+                                className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200"
+                                onClick={() => toggleDropdown('about')}
+                            >
+                                À PROPOS
+                            </button>
+                            {activeDropdown === 'about' && (
+                                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5">
+                                    <div className="py-1" role="menu" aria-orientation="vertical">
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Notre histoire</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Notre équipe</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Nos valeurs</a>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="relative">
+                            <button
+                                className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200"
+                                onClick={() => toggleDropdown('carpets')}
+                            >
+                                NOS TAPIS
+                            </button>
+                            {activeDropdown === 'carpets' && (
+                                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5">
+                                    <div className="py-1" role="menu" aria-orientation="vertical">
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis modernes</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis classiques</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis sur mesure</a>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <a className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200"
                            href="/nouvelle-collection">
                             NOUVELLE COLLECTION
                         </a>
-                        <a className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
-                           href="/espace-pros">
-                            ESPACE PROS
-                        </a>
+                        <div className="relative">
+                            <button
+                                className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200"
+                                onClick={() => toggleDropdown('pros')}
+                            >
+                                ESPACE PROS
+                            </button>
+                            {activeDropdown === 'pros' && (
+                                <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5">
+                                    <div className="py-1" role="menu" aria-orientation="vertical">
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Catalogue professionnel</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Demande de devis</a>
+                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Espace revendeur</a>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </nav>
                     <div className="flex items-center space-x-4 mt-4 sm:mt-0">
                         <div className="relative">
                             <input
-                                className="rounded-full bg-gray-100 dark:bg-gray-700 px-4 py-2 pr-10 text-sm focus:outline-none transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600 focus:ring-2 focus:ring-primary"
+                                className="outline-none rounded-xl bg-white dark:bg-[#222222] border border-gray-300 dark:border-gray-500 px-4 py-2 pr-10 text-sm text-black dark:text-white transition-all duration-200 hover:bg-opacity-70 dark:hover:bg-opacity-70"
                                 placeholder="Rechercher..."
                                 type="search"
                             />
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-300"
+                                className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 dark:text-gray-500"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -93,7 +148,7 @@ export default function Header() {
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-gray-700 dark:text-gray-300"
+                                className="h-6 w-6 text-black dark:text-white"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -116,7 +171,7 @@ export default function Header() {
                         <button className="transition-transform duration-200 hover:scale-110">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-gray-700 dark:text-gray-300"
+                                className="h-6 w-6 text-black dark:text-white"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -137,7 +192,7 @@ export default function Header() {
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 text-gray-700 dark:text-gray-300"
+                                    className="h-6 w-6 text-black dark:text-white"
                                     width="24"
                                     height="24"
                                     viewBox="0 0 24 24"
@@ -154,14 +209,14 @@ export default function Header() {
 
                             {isUserMenuOpen && (
                                 <div
-                                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5">
+                                    className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5">
                                     <div className="py-1" role="menu" aria-orientation="vertical"
                                          aria-labelledby="options-menu">
                                         <a href="#"
-                                           className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10"
                                            role="menuitem">Mon compte</a>
                                         <a href="#"
-                                           className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-opacity-10 dark:hover:bg-opacity-10"
                                            role="menuitem">Déconnexion</a>
                                     </div>
                                 </div>
@@ -169,8 +224,8 @@ export default function Header() {
                         </div>
                         <div className="relative">
                             <button
-                                className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-transform duration-200 hover:scale-110"
-                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                className="text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-transform duration-200 hover:scale-110"
+                                onClick={toggleDarkMode}
                             >
                                 {isDarkMode ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
