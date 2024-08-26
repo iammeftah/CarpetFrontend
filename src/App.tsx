@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Header from "./components/Header";
+
+function APropos() {
+    return <h2>À propos</h2>;
+}
+
+function NosTapis() {
+    return <h2>Nos Tapis</h2>;
+}
+
+function NouvelleCollection() {
+    return <h2>Nouvelle Collection</h2>;
+}
+
+function EspacePros() {
+    return <h2>Espace Pros</h2>;
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <div>
+                <Header />
+                <Routes>
+                    <Route path="/a-propos" element={<APropos />} />
+                    <Route path="/nos-tapis" element={<NosTapis />} />
+                    <Route path="/nouvelle-collection" element={<NouvelleCollection />} />
+                    <Route path="/espace-pros" element={<EspacePros />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
