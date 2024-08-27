@@ -14,6 +14,7 @@ export default function Header() {
     const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
     const [cartProducts] = useState<Product[]>([]);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const scrollThreshold = 300; // Lowered threshold for quicker shrinking
@@ -129,24 +130,92 @@ export default function Header() {
                             </svg>
                             <span
                                 className="absolute -top-2 -right-2 rounded-full bg-black dark:bg-white px-2 py-0.5 text-xs text-white dark:text-black">
-                                {cartProducts.length}
-                            </span>
+                                  {cartProducts.length}
+                                </span>
                         </button>
+
+                        <button
+                            className="relative transition-transform duration-200 hover:scale-110"
+                            onClick={() => {/* Navigate to wishlist page */
+                            }}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 text-black dark:text-white"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+
+                        <div className="relative">
+                            <button
+                                className="relative transition-transform duration-200 hover:scale-110"
+                                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6 text-black dark:text-white"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </button>
+
+                            {isUserDropdownOpen && (
+                                <div
+                                    className="absolute right-0 md:left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
+                                    <a href="#"
+                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Mon compte</a>
+                                    <a href="#"
+                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Paramètres</a>
+                                    <a href="#"
+                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Déconnexion</a>
+
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                     {!isMobile && (
-                        <nav className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 items-center w-full lg:w-auto">
+                        <nav
+                            className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 items-center w-full lg:w-auto">
                             <div className="relative w-full lg:w-auto group">
                                 <button
                                     className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     À PROPOS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
+                                    <span
+                                        className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
-                                <div className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                                <div
+                                    className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                     <div className="rounded-md" role="menu" aria-orientation="vertical">
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Notre histoire</a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Notre équipe</a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Nos valeurs</a>
+                                        <a href="#"
+                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
+                                           role="menuitem">Notre histoire</a>
+                                        <a href="#"
+                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
+                                           role="menuitem">Notre équipe</a>
+                                        <a href="#"
+                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
+                                           role="menuitem">Nos valeurs</a>
                                     </div>
                                 </div>
                             </div>
