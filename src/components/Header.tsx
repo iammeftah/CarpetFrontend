@@ -140,7 +140,7 @@ export default function Header() {
                                     className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     À PROPOS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100"></span>
+                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
                                 <div className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                     <div className="rounded-md" role="menu" aria-orientation="vertical">
@@ -155,7 +155,7 @@ export default function Header() {
                                     className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     NOS TAPIS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100"></span>
+                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
                                 <div className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                     <div className="rounded-md" role="menu" aria-orientation="vertical">
@@ -168,14 +168,14 @@ export default function Header() {
                             <a className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full lg:w-auto text-left relative group"
                                href="/nouvelle-collection">
                                 NOUVELLE COLLECTION
-                                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100"></span>
+                                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
                             </a>
                             <div className="rounded-md relative w-full lg:w-auto group">
                                 <button
                                     className="rounded-md text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     ESPACE PROS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100"></span>
+                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
                                 <div className="lg:absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                     <div className="rounded-md" role="menu" aria-orientation="vertical">
