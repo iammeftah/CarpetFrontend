@@ -2,6 +2,11 @@ import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from "./components/Header";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import {Homepage} from "./pages/Homepage"; // Import AOS styles
+
+
 
 function APropos() {
     return <h2>À propos</h2>;
@@ -21,6 +26,14 @@ function EspacePros() {
 
 function App() {
     useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-in-out',
+        });
+    }, []);
+
+    useEffect(() => {
         const darkMode = localStorage.getItem('darkMode');
         if (darkMode === 'true') {
             document.documentElement.classList.add('dark');
@@ -31,8 +44,8 @@ function App() {
 
         <Router>
             <div>
-                <Header />
                 <Routes>
+                    <Route path="/" element={<Homepage />} />
                     <Route path="/a-propos" element={<APropos />} />
                     <Route path="/nos-tapis" element={<NosTapis />} />
                     <Route path="/nouvelle-collection" element={<NouvelleCollection />} />

@@ -8,7 +8,7 @@ interface MenuSidebarProps {
 const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose }) => {
     return (
         <div
-            className={`fixed top-0 left-0 h-full w-full md:w-1/4 bg-white dark:bg-black shadow-lg transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
+            className={`fixed top-0 left-0 h-full w-full md:w-1/4 bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-70 backdrop-blur-md shadow-lg transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
             <div className="p-6">
                 <button onClick={onClose}
                         className="absolute top-4 right-4 text-black dark:text-white hover:text-opacity-70">
