@@ -40,19 +40,31 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                             className="absolute top-4 right-4 text-black dark:text-white hover:text-opacity-70">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                  d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
                     <h2 className="text-2xl font-bold mb-6 text-black dark:text-white">Menu</h2>
+                    <a className="text-2xl my-2 font-bold text-black dark:text-white flex md:hidden  items-center justify-start"
+                       href="/">
+                        ARTCO
+                    </a>
                     <nav>
                         <ul className="space-y-4">
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos produits</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nouvelle Collection</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis outlets</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis personnalisés</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nous contacter</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos magasins</a></li>
-                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos services</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos
+                                produits</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nouvelle
+                                Collection</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis
+                                outlets</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Tapis
+                                personnalisés</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nous
+                                contacter</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos
+                                magasins</a></li>
+                            <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Nos
+                                services</a></li>
                             <li><a href="#" className="text-black dark:text-white hover:text-opacity-70">Blog</a></li>
 
                             {isMobile && (
@@ -71,14 +83,16 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
                                                 >
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                          d="M19 9l-7 7-7-7"/>
                                                 </svg>
                                             </button>
                                             {expandedMenus[key] && (
                                                 <ul className="pl-4 mt-2 space-y-2">
                                                     {subMenu.items.map((item, index) => (
                                                         <li key={index}>
-                                                            <a href="#" className="text-black dark:text-white hover:text-opacity-70">{item}</a>
+                                                            <a href="#"
+                                                               className="text-black dark:text-white hover:text-opacity-70">{item}</a>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -86,7 +100,8 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                                         </li>
                                     ))}
                                     <li>
-                                        <a href="/tapis" className="text-black dark:text-white hover:text-opacity-70">NOS TAPIS</a>
+                                        <a href="/tapis" className="text-black dark:text-white hover:text-opacity-70">NOS
+                                            TAPIS</a>
                                     </li>
                                     <li>
                                         <button
@@ -94,8 +109,10 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                                             onClick={toggleDarkMode}
                                         >
                                             {isDarkMode ? 'Mode clair' : 'Mode sombre'}
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isDarkMode ? "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" : "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"}/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none"
+                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                                      d={isDarkMode ? "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" : "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"}/>
                                             </svg>
                                         </button>
                                     </li>
@@ -105,8 +122,8 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                     </nav>
                 </div>
             </div>
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-                <div className="text-center text-sm text-gray-500">
+            <div className="p-4 border-t border-neutral-200 dark:border-neutral-700">
+                <div className="text-center text-sm text-neutral-500">
                     All Copyrights reserved Artco - Powered by Maya Digital 2024
                     <div className="mt-2 flex items-center justify-center gap-4">
                         {/* Social media icons */}

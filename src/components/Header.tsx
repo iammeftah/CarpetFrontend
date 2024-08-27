@@ -14,10 +14,9 @@ export default function Header() {
     const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
     const [cartProducts] = useState<Product[]>([]);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const scrollThreshold = 300; // Lowered threshold for quicker shrinking
+    const scrollThreshold = 200;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -85,7 +84,7 @@ export default function Header() {
                         </button>
                         <div className="relative flex-grow lg:flex-grow-0">
                             <input
-                                className={`w-full lg:w-auto outline-none rounded-xl border border-gray-300 dark:border-gray-500 px-4 py-2 pr-10 text-sm text-black dark:text-white transition-all duration-200 hover:bg-opacity-70 dark:hover:bg-opacity-70 ${
+                                className={`w-full lg:w-auto outline-none rounded-xl border border-neutral-300 dark:border-neutral-500 px-4 py-2 pr-10 text-sm text-black dark:text-white transition-all duration-200 hover:bg-opacity-70 dark:hover:bg-opacity-70 ${
                                     scrolled ? 'bg-white dark:bg-[#222222]' : 'bg-transparent'
                                 }`}
                                 placeholder="Rechercher..."
@@ -93,7 +92,7 @@ export default function Header() {
                             />
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300 dark:text-gray-500"
+                                className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-300 dark:text-neutral-500"
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
@@ -130,14 +129,13 @@ export default function Header() {
                             </svg>
                             <span
                                 className="absolute -top-2 -right-2 rounded-full bg-black dark:bg-white px-2 py-0.5 text-xs text-white dark:text-black">
-                                  {cartProducts.length}
-                                </span>
+                                {cartProducts.length}
+                            </span>
                         </button>
 
                         <button
                             className="relative transition-transform duration-200 hover:scale-110"
-                            onClick={() => {/* Navigate to wishlist page */
-                            }}
+                            onClick={() => {/* Navigate to wishlist page */}}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -156,10 +154,9 @@ export default function Header() {
                             </svg>
                         </button>
 
-                        <div className="relative">
+                        <div className="relative group">
                             <button
-                                className="relative transition-transform duration-200 hover:scale-110"
-                                onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                                className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group hover:scale-110 duration-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -178,20 +175,14 @@ export default function Header() {
                                 </svg>
                             </button>
 
-                            {isUserDropdownOpen && (
-                                <div
-                                    className="absolute right-0 md:left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
-                                    <a href="#"
-                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Mon compte</a>
-                                    <a href="#"
-                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Paramètres</a>
-                                    <a href="#"
-                                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Déconnexion</a>
-
-                                </div>
-                            )}
+                            <div
+                                className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+                            >
+                                <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10">Mon compte</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10">Paramètres</a>
+                                <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10">Déconnexion</a>
+                            </div>
                         </div>
-
                     </div>
                     {!isMobile && (
                         <nav
@@ -202,7 +193,7 @@ export default function Header() {
                                 >
                                     À PROPOS
                                     <span
-                                        className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
+                                        className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
                                 <div
                                     className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -225,20 +216,20 @@ export default function Header() {
                                     className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     NOS TAPIS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
+                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
                                 </a>
                             </div>
                             <a className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full lg:w-auto text-left relative group"
                                href="/nouvelle-collection">
                                 NOUVELLE COLLECTION
-                                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
+                                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
                             </a>
                             <div className="rounded-md relative w-full lg:w-auto group">
                                 <button
                                     className="rounded-md text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     ESPACE PROS
-                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
+                                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
                                 </button>
                                 <div className="lg:absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                                     <div className="rounded-md" role="menu" aria-orientation="vertical">
