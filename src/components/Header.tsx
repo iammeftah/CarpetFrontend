@@ -60,12 +60,12 @@ export default function Header() {
 
     return (
         <>
-            <header className={`fixed top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-300 ${
+            <header className={`fixed top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-200 z-50 ${
                 scrolled ? 'bg-white dark:bg-black shadow-md h-16' : 'bg-transparent h-24'
             }`}>
                 {!isMobile && !scrolled && (
                     <div className="flex items-center justify-center w-full mb-4 lg:mb-0">
-                        <a className="text-2xl font-bold text-black dark:text-white items-center justify-center hidden md:flex" href="/homepage">
+                        <a className="text-2xl font-bold text-black dark:text-white items-center justify-center hidden md:flex" href="/">
                             ARTCO
                         </a>
                     </div>
@@ -151,19 +151,13 @@ export default function Header() {
                                 </div>
                             </div>
                             <div className="relative w-full lg:w-auto group">
-                                <button
+                                <a
+                                    href="/tapis"
                                     className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
                                 >
                                     NOS TAPIS
                                     <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100   bg-opacity-60 dark:bg-opacity-60"></span>
-                                </button>
-                                <div className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                                    <div className="rounded-md" role="menu" aria-orientation="vertical">
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis modernes</a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis classiques</a>
-                                        <a href="#" className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10" role="menuitem">Tapis sur mesure</a>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <a className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full lg:w-auto text-left relative group"
                                href="/nouvelle-collection">

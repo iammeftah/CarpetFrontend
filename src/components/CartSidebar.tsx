@@ -17,7 +17,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, products }) 
     const total = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
     return (
-        <div className={`fixed top-0 right-0 h-full w-full md:w-1/4 bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-70 backdrop-blur-md shadow-lg transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
+        <div className={`fixed z-50 top-0 right-0 h-full w-full md:w-1/4 bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-50 backdrop-blur-md shadow-lg transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
             <div className="p-6">
                 <button onClick={onClose} className="absolute top-4 right-4 text-black dark:text-white hover:text-opacity-70">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -21,10 +21,6 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
             title: 'À PROPOS',
             items: ['Notre histoire', 'Notre équipe', 'Nos valeurs']
         },
-        'NOS TAPIS': {
-            title: 'NOS TAPIS',
-            items: ['Tapis modernes', 'Tapis classiques', 'Tapis sur mesure']
-        },
         'ESPACE PROS': {
             title: 'ESPACE PROS',
             items: ['Catalogue professionnel', 'Demande de devis', 'Espace revendeur']
@@ -89,6 +85,9 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, isMobile, to
                                             )}
                                         </li>
                                     ))}
+                                    <li>
+                                        <a href="/tapis" className="text-black dark:text-white hover:text-opacity-70">NOS TAPIS</a>
+                                    </li>
                                     <li>
                                         <button
                                             className="text-black dark:text-white hover:text-opacity-70 flex items-center"

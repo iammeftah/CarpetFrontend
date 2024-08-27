@@ -37,40 +37,7 @@ export function Homepage() {
                 </AuroraBackground>
             </div>
             {/* Rest of the webpage content goes here */}
-            <div className="bg-white dark:bg-gray-900 p-8">
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                <h2 className="text-2xl font-bold mb-4 dark:text-white">Collections en vedette</h2>
-                {/* Add your featured carpet collections here */}
-            </div>
+
         </div>
     );
 }
