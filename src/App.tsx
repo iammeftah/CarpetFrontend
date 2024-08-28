@@ -6,6 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import {Homepage} from "./pages/Homepage"; // Import AOS styles
 import { TapisPage } from './pages/nos-tapis/Tapis';
+import Aboutpage from './pages/Aboutpage';
 
 
 
@@ -48,7 +49,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/homepage" element={<Homepage />} />
-                    <Route path="/a-propos" element={<APropos />} />
+                    <Route path="/a-propos" element={<Aboutpage />} />
+                    <Route path="/about" element={<Aboutpage />} />
                     <Route path="/nos-tapis" element={<NosTapis />} />
                     <Route path="/tapis" element={<TapisPage />} />
                     <Route path="/nouvelle-collection" element={<NouvelleCollection />} />

@@ -60,7 +60,7 @@ export default function Header() {
 
     return (
         <>
-            <header className={`fixed top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-200 z-50 ${
+            <header className={`fixed h-auto top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-200 z-50 ${
                 scrolled ? 'bg-white dark:bg-black shadow-md h-16' : 'bg-transparent h-24'
             }`}>
                 {!isMobile && !scrolled && (
