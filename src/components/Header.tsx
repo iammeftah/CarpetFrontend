@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MenuSidebar from './MenuSidebar';
-import CartSidebar from './CartSidebar';
 
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-}
 
 export default function Header() {
     const [isMenuSidebarOpen, setIsMenuSidebarOpen] = useState(false);
-    const [isCartSidebarOpen, setIsCartSidebarOpen] = useState(false);
-    const [cartProducts] = useState<Product[]>([]);
-    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [scrolled, setScrolled] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const scrollThreshold = 100;
@@ -60,24 +50,28 @@ export default function Header() {
 
     return (
         <>
-            <header className={`fixed h-auto top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-200 z-50 ${
-                scrolled ? 'bg-white dark:bg-black shadow-md h-16' : 'bg-transparent h-24'
-            }`}>
+            <header
+                className={`fixed h-auto top-0 w-full flex flex-col items-center px-4 py-4 lg:px-32 transition-all duration-200 z-50 ${
+                    scrolled
+                        ? 'bg-gradient-to-b from-white/50 to-white/0 dark:from-black/50 dark:to-black/0 backdrop-blur-md lg:bg-white lg:dark:bg-black lg:bg-none lg:backdrop-blur-none h-16'
+                        : 'bg-transparent h-24'
+                }`}>
                 {!isMobile && !scrolled && (
-                    <div className="flex items-center justify-center w-full mb-4 lg:mb-0">
-                        <a className="text-2xl font-bold text-black dark:text-white items-center justify-center hidden md:flex" href="/">
+                    <div className="flex items-center justify-center w-full my-4 lg:mb-0">
+                        <a className="text-2xl font-bold text-black dark:text-white items-center justify-center hidden md:flex"
+                           href="/">
                             ARTCO
                         </a>
                     </div>
                 )}
-                <div className="flex flex-col lg:flex-row items-center justify-between w-full">
+                <div className="flex flex-col lg:flex-row items-center justify-center w-full ">
                     {isMobile && (
                         <div className="flex items-center space-x-4 mb-4 lg:mb-0 w-full lg:w-auto justify-between">
                             <button
-                                className="text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70"
+                                className="text-neutral-600 dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70"
                                 onClick={() => setIsMenuSidebarOpen(true)}
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M4 6h16M4 12h16M4 18h16"/>
@@ -87,7 +81,7 @@ export default function Header() {
                     )}
                     {!isMobile && (
                         <nav
-                            className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 items-center w-full lg:w-auto">
+                            className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 items-center w-full lg:w-auto ">
                             <div className="relative w-full lg:w-auto group">
                                 <a
                                     href="/"
@@ -132,20 +126,16 @@ export default function Header() {
                                     <span
                                         className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
                                 </a>
-                                <div
-                                    className="lg:absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black ring-1 ring-black ring-opacity-5 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                                    <div className="rounded-md" role="menu" aria-orientation="vertical">
-                                        <a href="/tapis/#categories"
-                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
-                                           role="menuitem">Traditionnel</a>
-                                        <a href="/tapis/#categories"
-                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
-                                           role="menuitem">Modernes</a>
-                                        <a href="/tapis/#categories"
-                                           className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-[#AAAAAA] dark:hover:bg-[#EEEEEE] hover:bg-opacity-10 dark:hover:bg-opacity-10"
-                                           role="menuitem">Luxe</a>
-                                    </div>
-                                </div>
+                            </div>
+                            <div className="relative w-full lg:w-auto group">
+                                <a
+                                    href="/custom"
+                                    className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full text-left relative group"
+                                >
+                                    TAPIS PERSONALISÉ
+                                    <span
+                                        className="absolute left-0 right-0 bottom-0 h-0.5 bg-black dark:bg-white transform scale-x-0 transition-transform duration-300 origin-center group-hover:scale-x-100 bg-opacity-60 dark:bg-opacity-60"></span>
+                                </a>
                             </div>
                             <a className="text-sm font-medium text-black dark:text-white hover:text-opacity-70 dark:hover:text-opacity-70 transition-colors duration-200 w-full lg:w-auto text-left relative group"
                                href="/contact">
@@ -180,14 +170,8 @@ export default function Header() {
             <MenuSidebar
                 isOpen={isMenuSidebarOpen}
                 onClose={() => setIsMenuSidebarOpen(false)}
-                isMobile={isMobile}
                 toggleDarkMode={toggleDarkMode}
                 isDarkMode={isDarkMode}
-            />
-            <CartSidebar
-                isOpen={isCartSidebarOpen}
-                onClose={() => setIsCartSidebarOpen(false)}
-                products={cartProducts}
             />
         </>
     );

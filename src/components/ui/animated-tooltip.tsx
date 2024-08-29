@@ -37,7 +37,7 @@ export const AnimatedTooltip = ({
     };
 
     return (
-        <div className="flex flex-row scale-150">
+        <div className="flex flex-row scale-100 md:scale-150">
             {items.map((item, idx) => (
                 <div
                     className="-mr-4  relative group"

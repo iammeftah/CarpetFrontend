@@ -201,6 +201,301 @@
           "endDate": "2024-10-15T23:59:59Z"
         }
       ]
+    },
+    {
+      "id": 7,
+      "length": 280,
+      "width": 190,
+      "color": "Bordeaux",
+      "price": "3599.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis classique avec des motifs floraux élégants, parfait pour un intérieur raffiné.",
+      "weight": 7.8,
+      "model": "Floral Elegance",
+      "quality": "Haute",
+      "material": "Laine",
+      "title": "Tapis Classique Floral Bordeaux",
+      "reference": "CLA-FLOR-BOR-001",
+      "image": "https://images.unsplash.com/photo-1561365452-adb940139ffa?q=80&w=2056&auto=format&fit=crop",
+      "updatedAt": "2024-09-03T15:45:00Z",
+      "category": {
+        "id": "classique",
+        "name": "Classique"
+      },
+      "subcategory": {
+        "id": "floral",
+        "name": "Floral"
+      },
+      "type": {
+        "id": "classique-floral",
+        "name": "Tapis Classique Floral",
+        "thumbnail": "https://images.unsplash.com/photo-1561365452-adb940139ffa?q=80&w=2056&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 8,
+      "length": 220,
+      "width": 160,
+      "color": "Bleu ciel",
+      "price": "1899.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis scandinave minimaliste avec des motifs géométriques subtils.",
+      "weight": 4.5,
+      "model": "Nordic Simplicity",
+      "quality": "Bonne",
+      "material": "Coton",
+      "title": "Tapis Scandinave Bleu Ciel",
+      "reference": "SCA-GEO-BC-001",
+      "image": "https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-09-04T10:30:00Z",
+      "category": {
+        "id": "scandinave",
+        "name": "Scandinave"
+      },
+      "subcategory": {
+        "id": "minimaliste",
+        "name": "Minimaliste"
+      },
+      "type": {
+        "id": "scandinave-geometrique",
+        "name": "Tapis Scandinave Géométrique",
+        "thumbnail": "https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 9,
+      "length": 300,
+      "width": 200,
+      "color": "Marron et Beige",
+      "price": "2799.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis berbère authentique avec des motifs tribaux traditionnels.",
+      "weight": 9.0,
+      "model": "Berbère Authentique",
+      "quality": "Artisanale",
+      "material": "Laine",
+      "title": "Tapis Berbère Marron et Beige",
+      "reference": "BER-TRIB-MB-001",
+      "image": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=1974&auto=format&fit=crop",
+      "updatedAt": "2024-09-05T14:20:00Z",
+      "category": {
+        "id": "ethnique",
+        "name": "Ethnique"
+      },
+      "subcategory": {
+        "id": "berbere",
+        "name": "Berbère"
+      },
+      "type": {
+        "id": "berbere-tribal",
+        "name": "Tapis Berbère Tribal",
+        "thumbnail": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=1974&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 10,
+      "length": 320,
+      "width": 230,
+      "color": "Terracotta",
+      "price": "3299.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis vintage inspiré des motifs turcs traditionnels avec une touche moderne.",
+      "weight": 8.2,
+      "model": "Vintage Turkish",
+      "quality": "Premium",
+      "material": "Coton et Laine",
+      "title": "Tapis Vintage Turc Terracotta",
+      "reference": "VIN-TURK-TER-001",
+      "image": "https://images.unsplash.com/photo-1600166348310-d912eb3f50b3?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-09-07T11:30:00Z",
+      "category": {
+        "id": "vintage",
+        "name": "Vintage"
+      },
+      "subcategory": {
+        "id": "turc",
+        "name": "Turc"
+      },
+      "type": {
+        "id": "vintage-turc",
+        "name": "Tapis Vintage Turc",
+        "thumbnail": "https://images.unsplash.com/photo-1600166348310-d912eb3f50b3?q=80&w=2070&auto=format&fit=crop"
+      },
+      "promotions": [
+        {
+          "id": 3,
+          "discountPercentage": 20,
+          "startDate": "2024-10-01T00:00:00Z",
+          "endDate": "2024-10-31T23:59:59Z"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "length": 200,
+      "width": 150,
+      "color": "Vert Émeraude",
+      "price": "1699.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis en velours doux avec un motif art déco élégant.",
+      "weight": 4.8,
+      "model": "Velvet Deco",
+      "quality": "Luxe",
+      "material": "Velours",
+      "title": "Tapis Velours Art Déco Vert Émeraude",
+      "reference": "VEL-DECO-VE-001",
+      "image": "https://images.unsplash.com/photo-1603204077779-bed963ea7d0c?q=80&w=2069&auto=format&fit=crop",
+      "updatedAt": "2024-09-08T14:45:00Z",
+      "category": {
+        "id": "art-deco",
+        "name": "Art Déco"
+      },
+      "subcategory": {
+        "id": "velours",
+        "name": "Velours"
+      },
+      "type": {
+        "id": "art-deco-velours",
+        "name": "Tapis Art Déco en Velours",
+        "thumbnail": "https://images.unsplash.com/photo-1603204077779-bed963ea7d0c?q=80&w=2069&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 12,
+      "length": 280,
+      "width": 200,
+      "color": "Gris Anthracite",
+      "price": "2399.99",
+      "availability": false,
+      "condition": "New",
+      "description": "Tapis contemporain avec un motif en relief, créant un effet 3D subtil.",
+      "weight": 6.5,
+      "model": "3D Contemporary",
+      "quality": "Haute",
+      "material": "Polyester",
+      "title": "Tapis Contemporain 3D Gris Anthracite",
+      "reference": "CON-3D-GA-001",
+      "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop",
+      "updatedAt": "2024-09-09T16:20:00Z",
+      "category": {
+        "id": "contemporain",
+        "name": "Contemporain"
+      },
+      "subcategory": {
+        "id": "relief",
+        "name": "Relief"
+      },
+      "type": {
+        "id": "contemporain-3d",
+        "name": "Tapis Contemporain 3D",
+        "thumbnail": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 13,
+      "length": 350,
+      "width": 250,
+      "color": "Multicolore Pastel",
+      "price": "3899.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Grand tapis tissé à la main avec un dégradé de couleurs pastel.",
+      "weight": 10.5,
+      "model": "Pastel Gradient",
+      "quality": "Artisanale",
+      "material": "Laine",
+      "title": "Grand Tapis Dégradé Pastel",
+      "reference": "ART-GRAD-MP-001",
+      "image": "https://images.unsplash.com/photo-1617325721270-06dace7b3458?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-09-10T09:15:00Z",
+      "category": {
+        "id": "artisanal",
+        "name": "Artisanal"
+      },
+      "subcategory": {
+        "id": "degrade",
+        "name": "Dégradé"
+      },
+      "type": {
+        "id": "artisanal-degrade",
+        "name": "Tapis Artisanal Dégradé",
+        "thumbnail": "https://images.unsplash.com/photo-1617325721270-06dace7b3458?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 14,
+      "length": 180,
+      "width": 120,
+      "color": "Bleu Océan",
+      "price": "999.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis d'extérieur résistant avec un motif marin, parfait pour le bord de la piscine.",
+      "weight": 3.2,
+      "model": "Marine Outdoor",
+      "quality": "Durable",
+      "material": "Polypropylène",
+      "title": "Tapis d'Extérieur Marin Bleu Océan",
+      "reference": "OUT-MAR-BO-001",
+      "image": "https://images.unsplash.com/photo-1600166802685-56c54b152771?q=80&w=1974&auto=format&fit=crop",
+      "updatedAt": "2024-09-11T13:40:00Z",
+      "category": {
+        "id": "exterieur",
+        "name": "Extérieur"
+      },
+      "subcategory": {
+        "id": "marin",
+        "name": "Marin"
+      },
+      "type": {
+        "id": "outdoor-marin",
+        "name": "Tapis d'Extérieur Marin",
+        "thumbnail": "https://images.unsplash.com/photo-1600166802685-56c54b152771?q=80&w=1974&auto=format&fit=crop"
+      },
+      "promotions": [
+        {
+          "id": 4,
+          "discountPercentage": 25,
+          "startDate": "2024-09-20T00:00:00Z",
+          "endDate": "2024-10-20T23:59:59Z"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "length": 300,
+      "width": 200,
+      "color": "Rouge et Noir",
+      "price": "4599.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis de style japonais avec un motif de carpes koï élégant.",
+      "weight": 7.8,
+      "model": "Koi Elegance",
+      "quality": "Premium",
+      "material": "Soie",
+      "title": "Tapis Japonais Carpes Koï Rouge et Noir",
+      "reference": "JAP-KOI-RN-001",
+      "image": "https://images.unsplash.com/photo-1600166805677-6ce8bd8fa5ce?q=80&w=1974&auto=format&fit=crop",
+      "updatedAt": "2024-09-12T10:55:00Z",
+      "category": {
+        "id": "asiatique",
+        "name": "Asiatique"
+      },
+      "subcategory": {
+        "id": "japonais",
+        "name": "Japonais"
+      },
+      "type": {
+        "id": "japonais-koi",
+        "name": "Tapis Japonais Koï",
+        "thumbnail": "https://images.unsplash.com/photo-1600166805677-6ce8bd8fa5ce?q=80&w=1974&auto=format&fit=crop"
+      }
     }
   ]
 }

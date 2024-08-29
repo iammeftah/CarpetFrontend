@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { HeroParallax } from "../../components/ui/hero-parallax";
 import Header from "../../components/Header";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, Filter, ChevronDown, Star, ShoppingCart, X } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { Search, ChevronDown, ShoppingCart, X, ChevronsDown } from 'lucide-react';
 import carpetData from '../../carpetData.json';
+import ProductDetails from "../../components/ProductDetails";
 
 interface Product {
     id: number;
@@ -43,7 +44,13 @@ interface Product {
     }[];
 }
 
-{/*hada rah ma style ma walo*/}
+export const heroProducts = carpetData.products.map(product => ({
+    title: product.title,
+    link: '#gallery',
+    thumbnail: product.image
+}));
+
+
 export function TapisPage() {
     const [products, setProducts] = useState<Product[]>(carpetData.products);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>(carpetData.products);
@@ -53,8 +60,7 @@ export function TapisPage() {
     const [sortOption, setSortOption] = useState("");
     const [showDialog, setShowDialog] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [activeFilter, setActiveFilter] = useState("");
+    const [activeDropdown, setActiveDropdown] = useState("");
 
     useEffect(() => {
         filterProducts();
@@ -77,140 +83,108 @@ export function TapisPage() {
     };
 
     const categories = Array.from(new Set(products.map(product => product.category.name)));
-    const maxPrice = Math.max(...products.map(product => parseFloat(product.price)));
-
-    const toggleFilter = (filter: string) => {
-        setActiveFilter(activeFilter === filter ? "" : filter);
-    };
+    const maxPrice = 6000;
 
     const clearFilters = () => {
         setSelectedCategory("");
         setPriceRange([0, maxPrice]);
         setSortOption("");
-        setActiveFilter("");
+        setActiveDropdown("");
     };
 
-    const [activeDropdown, setActiveDropdown] = useState("");
     const toggleDropdown = (dropdown: string) => {
         setActiveDropdown(activeDropdown === dropdown ? "" : dropdown);
     };
 
-    return (
-        <div className="bg-white dark:bg-neutral-900 min-h-screen">
-            <Header />
-            <HeroParallax products={heroProducts} />
+    const { scrollY } = useScroll();
+    const scrollIndicatorY = useTransform(scrollY, [0, 300], [0, 100]);
+    const scrollIndicatorOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-            <main className="container mx-auto px-4 py-16">
+    return (
+        <div className="bg-neutral-50 dark:bg-neutral-900 min-h-screen">
+            <Header/>
+            <HeroParallax products={heroProducts}/>
+            <motion.div
+                className="absolute bottom-10 transform text-neutral-800 dark:text-neutral-200 flex flex-col items-center w-full"
+                style={{
+                    y: scrollIndicatorY,
+                    opacity: scrollIndicatorOpacity,
+                }}
+            >
+                <motion.div
+                    animate={{
+                        y: [0, 10, 0],
+                    }}
+                    transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                    }}
+                >
+                    <span className="text-sm mb-2">Scroll down for more</span>
+                    <ChevronsDown className="h-6 w-6 mx-auto"/>
+                </motion.div>
+            </motion.div>
+
+            <main id="gallery" className="container mx-auto px-4 py-16">
                 <h2 className="text-4xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
                     Notre Collection de Tapis
                 </h2>
 
                 <div className="mb-8">
                     <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
-                        <motion.div
-                            className="relative w-full md:w-1/4"
-                            initial={{opacity: 0, y: -20}}
-                            animate={{opacity: 1, y: 0}}
-                            transition={{duration: 0.5}}
-                        >
-                            <div className="relative bg-transparent flex-grow lg:flex-grow-0">
-                                <input
-                                    className="w-full bg-transparent outline-none rounded-xl border border-neutral-300 dark:border-neutral-500 px-4 py-2 pr-10 text-sm text-black dark:text-white transition-all duration-200 hover:bg-opacity-70 dark:hover:bg-opacity-70"
-                                    placeholder="Rechercher..."
-                                    type="search"
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                />
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-300 dark:text-neutral-500"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <path d="m21 21-4.3-4.3"></path>
-                                </svg>
-                            </div>
-                        </motion.div>
+                        <div className="relative w-full md:w-1/4">
+                            <input
+                                className="w-full bg-white dark:bg-neutral-800 outline-none rounded-xl border border-neutral-300 dark:border-neutral-700 px-4 py-2 pr-10 text-sm text-neutral-800 dark:text-neutral-200 transition-all duration-200"
+                                placeholder="Rechercher..."
+                                type="search"
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <Search
+                                className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"/>
+                        </div>
                         <div className="flex gap-2 relative">
-                            {["Catégorie", "Prix", "Trier"].map((option) => (
-                                <div key={option} className="relative">
+                            {[
+                                {name: "Catégorie", options: categories},
+                                {name: "Prix", options: ["€0 - €1000", "€1000 - €3000", "€3000 - €6000"]},
+                                {name: "Trier par", options: ["Prix: Croissant", "Prix: Décroissant"]}
+                            ].map((filter) => (
+                                <div key={filter.name} className="relative">
                                     <button
-                                        onClick={() => toggleDropdown(option)}
-                                        className="px-4 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 flex items-center"
+                                        onClick={() => toggleDropdown(filter.name)}
+                                        className="px-4 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-400 transition-all duration-300 flex items-center"
                                     >
-                                        {option} <ChevronDown className="ml-2 h-4 w-4"/>
+                                        {filter.name} <ChevronDown className="ml-2 h-4 w-4"/>
                                     </button>
                                     <AnimatePresence>
-                                        {activeDropdown === option && (
+                                        {activeDropdown === filter.name && (
                                             <motion.div
                                                 initial={{opacity: 0, y: -10}}
                                                 animate={{opacity: 1, y: 0}}
                                                 exit={{opacity: 0, y: -10}}
                                                 transition={{duration: 0.2}}
-                                                className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-neutral-800 ring-1 ring-black ring-opacity-5"
+                                                className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-neutral-800 ring-1 ring-black ring-opacity-5 overflow-hidden"
                                             >
-                                                <div className="py-1">
-                                                    {option === "Catégorie" && categories.map((category) => (
+                                                <div className="py-1 max-h-60 overflow-y-auto">
+                                                    {filter.options.map((option) => (
                                                         <button
-                                                            key={category}
+                                                            key={option}
                                                             onClick={() => {
-                                                                setSelectedCategory(category);
+                                                                if (filter.name === "Catégorie") {
+                                                                    setSelectedCategory(option);
+                                                                } else if (filter.name === "Prix") {
+                                                                    const [min, max] = option.split(" - ").map(price => parseInt(price.replace("€", "")));
+                                                                    setPriceRange([min, max]);
+                                                                } else if (filter.name === "Trier par") {
+                                                                    setSortOption(option === "Prix: Croissant" ? "price-asc" : "price-desc");
+                                                                }
                                                                 setActiveDropdown("");
                                                             }}
                                                             className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
                                                         >
-                                                            {category}
+                                                            {option}
                                                         </button>
                                                     ))}
-                                                    {option === "Prix" && (
-                                                        <div className="px-4 py-2">
-                                                            <input
-                                                                type="range"
-                                                                min={0}
-                                                                max={maxPrice}
-                                                                step={100}
-                                                                value={priceRange[1]}
-                                                                onChange={(e) => {
-                                                                    setPriceRange([0, Number(e.target.value)]);
-                                                                    setActiveDropdown("");
-                                                                }}
-                                                                className="w-full"
-                                                            />
-                                                            <div
-                                                                className="flex justify-between text-sm text-neutral-600 dark:text-neutral-400">
-                                                                <span>€0</span>
-                                                                <span>€{priceRange[1]}</span>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    {option === "Trier" && (
-                                                        <div className="right-0">
-                                                            <button
-                                                                onClick={() => {
-                                                                    setSortOption("price-asc");
-                                                                    setActiveDropdown("");
-                                                                }}
-                                                                className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
-                                                            >
-                                                                Prix: Croissant
-                                                            </button>
-                                                            <button
-                                                                onClick={() => {
-                                                                    setSortOption("price-desc");
-                                                                    setActiveDropdown("");
-                                                                }}
-                                                                className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
-                                                            >
-                                                                Prix: Décroissant
-                                                            </button>
-                                                        </div>
-                                                    )}
                                                 </div>
                                             </motion.div>
                                         )}
@@ -229,7 +203,7 @@ export function TapisPage() {
                         >
                             {selectedCategory && (
                                 <div
-                                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm flex items-center">
+                                    className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
                                     {selectedCategory}
                                     <button onClick={() => setSelectedCategory("")} className="ml-2 focus:outline-none">
                                         <X className="h-3 w-3"/>
@@ -238,8 +212,8 @@ export function TapisPage() {
                             )}
                             {priceRange[1] < maxPrice && (
                                 <div
-                                    className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm flex items-center">
-                                    €0 - €{priceRange[1]}
+                                    className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
+                                    €{priceRange[0]} - €{priceRange[1]}
                                     <button onClick={() => setPriceRange([0, maxPrice])}
                                             className="ml-2 focus:outline-none">
                                         <X className="h-3 w-3"/>
@@ -248,7 +222,7 @@ export function TapisPage() {
                             )}
                             {sortOption && (
                                 <div
-                                    className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm flex items-center">
+                                    className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
                                     {sortOption === "price-asc" ? "Prix: Croissant" : "Prix: Décroissant"}
                                     <button onClick={() => setSortOption("")} className="ml-2 focus:outline-none">
                                         <X className="h-3 w-3"/>
@@ -275,7 +249,7 @@ export function TapisPage() {
                             animate={{opacity: 1, y: 0}}
                             exit={{opacity: 0, y: -20}}
                             transition={{duration: 0.3}}
-                            className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                            className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col"
                         >
                             <div className="relative h-64">
                                 <img
@@ -285,27 +259,27 @@ export function TapisPage() {
                                 />
                                 {product.promotions && product.promotions.length > 0 && (
                                     <span
-                                        className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm">
-                                        {product.promotions[0].discountPercentage}% OFF
-                                    </span>
+                                        className="absolute top-2 right-2 bg-neutral-800 text-white px-2 py-1 rounded text-sm">
+              {product.promotions[0].discountPercentage}% OFF
+            </span>
                                 )}
                                 {!product.availability && (
                                     <span
                                         className="absolute top-2 left-2 bg-neutral-600 text-white px-2 py-1 rounded text-sm">
-                                        Rupture de stock
-                                    </span>
+              Rupture de stock
+            </span>
                                 )}
                             </div>
-                            <div className="p-4">
+                            <div className="p-4 flex flex-col flex-grow">
                                 <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-neutral-200">{product.title}</h3>
                                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{product.description}</p>
                                 <div className="flex justify-between items-center mb-2">
                                     <span
                                         className="text-lg font-bold text-neutral-800 dark:text-neutral-200">€{product.price}</span>
                                     <span
-                                        className={`text-sm ${product.availability ? 'text-green-500' : 'text-red-500'}`}>
-                                        {product.availability ? 'En stock' : 'Rupture de stock'}
-                                    </span>
+                                        className={`text-sm ${product.availability ? 'text-neutral-600' : 'text-neutral-400'}`}>
+              {product.availability ? 'En stock' : 'Rupture de stock'}
+            </span>
                                 </div>
                                 <div className="flex justify-between items-center mb-4">
                                     <span
@@ -313,19 +287,19 @@ export function TapisPage() {
                                     <span
                                         className="text-sm text-neutral-600 dark:text-neutral-400">Qualité: {product.quality}</span>
                                 </div>
-                                <div className="flex justify-between">
+                                <div className="mt-auto flex justify-between">
                                     <button
                                         onClick={() => {
                                             setSelectedProduct(product);
                                             setShowDialog(true);
                                         }}
-                                        className="px-4 py-2 text-sm border rounded bg-white dark:bg-neutral-800"
+                                        className="px-4 py-2 text-sm rounded text-neutral-800 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors duration-300"
                                     >
                                         Voir les détails
                                     </button>
                                     <button
                                         disabled={!product.availability}
-                                        className={`px-4 py-2 text-sm rounded ${product.availability ? 'bg-blue-500 text-white' : 'bg-neutral-300 text-neutral-600 cursor-not-allowed'}`}
+                                        className={`px-4 py-2 text-sm rounded ${product.availability ? 'bg-neutral-800 dark:bg-neutral-200 text-white dark:text-black hover:bg-neutral-700' : 'bg-neutral-400 text-neutral-600 cursor-not-allowed'} transition-colors duration-300`}
                                     >
                                         <ShoppingCart className="inline-block mr-2 h-4 w-4"/>
                                         {product.availability ? 'Ajouter au panier' : 'Indisponible'}
@@ -338,37 +312,17 @@ export function TapisPage() {
             </main>
 
             {showDialog && selectedProduct && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white dark:bg-neutral-800 p-6 rounded-lg max-w-md w-full">
-                        <h2 className="text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">{selectedProduct.title}</h2>
-                        <p className="mb-4 text-neutral-600 dark:text-neutral-400">Informations détaillées sur le
-                            tapis.</p>
-                        <div className="grid gap-2 text-neutral-700 dark:text-neutral-300">
-                            <p><strong>Dimensions:</strong> {selectedProduct.length}cm x {selectedProduct.width}cm</p>
-                            <p><strong>Poids:</strong> {selectedProduct.weight}kg</p>
-                            <p><strong>Couleur:</strong> {selectedProduct.color}</p>
-                            <p><strong>Modèle:</strong> {selectedProduct.model}</p>
-                            <p><strong>Référence:</strong> {selectedProduct.reference}</p>
-                            <p><strong>Catégorie:</strong> {selectedProduct.category.name}</p>
-                            <p><strong>Sous-catégorie:</strong> {selectedProduct.subcategory.name}</p>
-                            <p><strong>Type:</strong> {selectedProduct.type.name}</p>
-                            <p><strong>Dernière mise à
-                                jour:</strong> {new Date(selectedProduct.updatedAt).toLocaleDateString()}</p>
-                        </div>
-                        <button
-                            onClick={() => setShowDialog(false)}
-                            className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                        >
-                            Fermer
-                        </button>
-                    </div>
-                </div>
+                <ProductDetails
+                    product={selectedProduct}
+                    onClose={() => setShowDialog(false)}
+                />
             )}
         </div>
     );
 }
 
 
+{/*
 export const heroProducts = [
     {
         title: "Clair de Lune",
@@ -461,3 +415,5 @@ export const heroProducts = [
             "https://plus.unsplash.com/premium_photo-1675788271687-6a50324324e1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
 ];
+
+*/}

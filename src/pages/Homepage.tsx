@@ -105,71 +105,61 @@ export function Homepage() {
             <main className="container mx-auto px-4  py-16 text-black dark:text-white min-h-screen">
                 <h2 className="text-4xl font-bold text-center mb-12">Explorez Nos Collections</h2>
 
-                {/* Categories */}
-                {/* Hadhci machi responsive */}
-                <div className="flex justify-center mb-8 relative">
-                    {categories.map((category, index) => (
-                        <div key={category} className="relative">
-                            <motion.button
-                                ref={el => buttonsRef.current[index] = el}
-                                onClick={() => {
-                                    setSelectedCategory(category);
-                                    setSelectedSubcategory(products.find(p => p.category.id === category)?.subcategory.id || '');
-                                }}
-                                className={`px-6 py-3 text-md md:text-lg font-medium transition-colors duration-200 relative z-10 ${
-                                    selectedCategory === category
-                                        ? 'text-white dark:text-black'
-                                        : 'text-gray-600 dark:text-gray-300'
-                                }`}
-                            >
-                                {products.find(p => p.category.id === category)?.category.name}
-                            </motion.button>
-                            {selectedCategory === category && (
-                                <motion.div
-                                    className="absolute bg-neutral-500 dark:bg-neutral-200 shadow-lg z-0 rounded-full"
-                                    layoutId="categoryBackground"
-                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                    style={{
-                                        top: '15%',
-                                        bottom: '15%',
-                                        left: 0,
-                                        right: 0,
+                {/* Categories - Updated for consistent wrapping */}
+                <div className="mb-8">
+                    <div className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto">
+                        {categories.map((category) => (
+                            <div key={category} className="relative">
+                                <motion.button
+                                    onClick={() => {
+                                        setSelectedCategory(category);
+                                        setSelectedSubcategory(products.find(p => p.category.id === category)?.subcategory.id || '');
                                     }}
-                                />
-                            )}
-                        </div>
-                    ))}
+                                    className={`px-4 py-2 text-sm md:text-base font-medium transition-colors duration-200 relative z-10 rounded-full ${
+                                        selectedCategory === category
+                                            ? 'text-white dark:text-black'
+                                            : 'text-gray-600 dark:text-gray-300'
+                                    }`}
+                                >
+                                    {products.find(p => p.category.id === category)?.category.name}
+                                </motion.button>
+                                {selectedCategory === category && (
+                                    <motion.div
+                                        className="absolute inset-0 bg-neutral-500 dark:bg-neutral-200 shadow-lg z-0 rounded-full"
+                                        layoutId="categoryBackground"
+                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Subcategories */}
-                <div className="flex justify-center mb-8 relative">
-                    {subcategories.map((subcategory, index) => (
-                        <div key={subcategory} className="relative">
-                            <motion.button
-                                onClick={() => setSelectedSubcategory(subcategory)}
-                                className={`px-4 py-2 text-md font-medium transition-colors duration-200 relative z-10 ${
-                                    selectedSubcategory === subcategory
-                                        ? 'text-white dark:text-black'
-                                        : 'text-gray-600 dark:text-gray-300'
-                                }`}
-                            >
-                                {products.find(p => p.subcategory.id === subcategory)?.subcategory.name}
-                            </motion.button>
-                            {selectedSubcategory === subcategory && (
-                                <motion.div
-                                    className="absolute bg-neutral-400 dark:bg-neutral-300 shadow-lg z-0 rounded-full"
-                                    layoutId="subcategoryBackground"
-                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                    style={{
-                                        top: '15%',
-                                        bottom: '15%',
-                                        left: 0,
-                                        right: 0,
-                                    }}
-                                />
-                            )}
-                        </div>
-                    ))}
+                {/* Subcategories - Updated to match the category style */}
+                <div className="mb-8">
+                    <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
+                        {subcategories.map((subcategory) => (
+                            <div key={subcategory} className="relative">
+                                <motion.button
+                                    onClick={() => setSelectedSubcategory(subcategory)}
+                                    className={`px-4 py-2 text-sm md:text-base font-medium transition-colors duration-200 relative z-10 rounded-full ${
+                                        selectedSubcategory === subcategory
+                                            ? 'text-white dark:text-black'
+                                            : 'text-gray-600 dark:text-gray-300'
+                                    }`}
+                                >
+                                    {products.find(p => p.subcategory.id === subcategory)?.subcategory.name}
+                                </motion.button>
+                                {selectedSubcategory === subcategory && (
+                                    <motion.div
+                                        className="absolute inset-0 bg-neutral-400 dark:bg-neutral-300 shadow-lg z-0 rounded-full"
+                                        layoutId="subcategoryBackground"
+                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* Products */}

@@ -1,358 +1,604 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import carpetData from '../../carpetData.json'
+import React, { useState, useEffect } from 'react';
+import { HeroParallax } from "../../components/ui/hero-parallax";
+import Header from "../../components/Header";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, Filter, ChevronDown, Star, ShoppingCart, X } from 'lucide-react';
+import carpetData from '../../carpetData.json';
 
 interface Product {
-  id: number
-  title: string
-  description: string
-  price: string
-  image: string
-  availability: boolean
-  category: { name: string }
-  material: string
-  quality: string
-  length: number
-  width: number
-  weight: number
-  color: string
-  model: string
-  reference: string
-  subcategory: { name: string }
-  type: { name: string }
-  updatedAt: string
-  promotions?: { discountPercentage: number }[]
+    id: number;
+    length: number;
+    width: number;
+    color: string;
+    price: string;
+    availability: boolean;
+    condition: string;
+    description: string;
+    weight: number;
+    model: string;
+    quality: string;
+    material: string;
+    title: string;
+    reference: string;
+    image: string;
+    updatedAt: string;
+    category: {
+        id: string;
+        name: string;
+    };
+    subcategory: {
+        id: string;
+        name: string;
+    };
+    type: {
+        id: string;
+        name: string;
+        thumbnail: string;
+    };
+    promotions?: {
+        id: number;
+        discountPercentage: number;
+        startDate: string;
+        endDate: string;
+    }[];
 }
 
-export default function TapisPage() {
-  const [products, setProducts] = useState<Product[]>(carpetData.products)
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(carpetData.products)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [priceRange, setPriceRange] = useState([0, 6000])
-  const [sortOption, setSortOption] = useState("")
-  const [showDialog, setShowDialog] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [activeFilter, setActiveFilter] = useState("")
-  const [isDarkMode, setIsDarkMode] = useState(false)
+{/*hada rah ma style ma walo*/}
+export function TapisPage() {
+    const [products, setProducts] = useState<Product[]>(carpetData.products);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>(carpetData.products);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [priceRange, setPriceRange] = useState([0, 6000]);
+    const [sortOption, setSortOption] = useState("");
+    const [showDialog, setShowDialog] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("");
 
-  useEffect(() => {
-    filterProducts()
-  }, [searchTerm, selectedCategory, priceRange, sortOption])
+    useEffect(() => {
+        filterProducts();
+    }, [searchTerm, selectedCategory, priceRange, sortOption]);
 
-  const filterProducts = () => {
-    let filtered = products.filter(product =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedCategory === "" || product.category.name === selectedCategory) &&
-      parseFloat(product.price) >= priceRange[0] && parseFloat(product.price) <= priceRange[1]
-    )
+    const filterProducts = () => {
+        let filtered = products.filter(product =>
+            product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (selectedCategory === "" || product.category.name === selectedCategory) &&
+            parseFloat(product.price) >= priceRange[0] && parseFloat(product.price) <= priceRange[1]
+        );
 
-    if (sortOption === "price-asc") {
-      filtered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
-    } else if (sortOption === "price-desc") {
-      filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
-    }
+        if (sortOption === "price-asc") {
+            filtered.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        } else if (sortOption === "price-desc") {
+            filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        }
 
-    setFilteredProducts(filtered)
-  }
+        setFilteredProducts(filtered);
+    };
 
-  const categories = Array.from(new Set(products.map(product => product.category.name)))
-  const maxPrice = Math.max(...products.map(product => parseFloat(product.price)))
+    const categories = Array.from(new Set(products.map(product => product.category.name)));
+    const maxPrice = Math.max(...products.map(product => parseFloat(product.price)));
 
-  const toggleFilter = (filter: string) => {
-    setActiveFilter(activeFilter === filter ? "" : filter)
-  }
+    const toggleFilter = (filter: string) => {
+        setActiveFilter(activeFilter === filter ? "" : filter);
+    };
 
-  const clearFilters = () => {
-    setSelectedCategory("")
-    setPriceRange([0, maxPrice])
-    setSortOption("")
-    setActiveFilter("")
-  }
+    const clearFilters = () => {
+        setSelectedCategory("");
+        setPriceRange([0, maxPrice]);
+        setSortOption("");
+        setActiveFilter("");
+    };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-  }
+    const [activeDropdown, setActiveDropdown] = useState("");
+    const toggleDropdown = (dropdown: string) => {
+        setActiveDropdown(activeDropdown === dropdown ? "" : dropdown);
+    };
 
-  return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-900'}`}>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Notre Collection de Tapis</h1>
-          <button
-            onClick={toggleDarkMode}
-            className={`p-2 rounded-full ${isDarkMode ? 'bg-yellow-400 text-gray-900' : 'bg-gray-800 text-yellow-400'}`}
-          >
-            {isDarkMode ? '☀️' : '🌙'}
-          </button>
-        </div>
+    return (
+        <div className="bg-white dark:bg-neutral-900 min-h-screen">
+            <Header />
+            <HeroParallax products={heroProducts} />
 
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
-            <div className="relative w-full md:w-1/3">
-              <input
-                type="text"
-                placeholder="Rechercher des tapis..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full p-3 pl-10 border rounded-full focus:outline-none focus:ring-2 transition-all duration-300 ${
-                  isDarkMode
-                    ? 'bg-gray-800 border-gray-700 focus:ring-blue-500'
-                    : 'bg-white border-gray-300 focus:ring-blue-300'
-                }`}
-              />
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
-            </div>
-            <div className="flex gap-2">
-              {['category', 'price', 'sort'].map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => toggleFilter(filter)}
-                  className={`px-4 py-2 text-sm border rounded transition-colors duration-200 ${
-                    activeFilter === filter
-                      ? isDarkMode
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-blue-500 text-white'
-                      : isDarkMode
-                      ? 'bg-gray-800 border-gray-700'
-                      : 'bg-white border-gray-300'
-                  }`}
-                >
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)} ▼
-                </button>
-              ))}
-            </div>
-          </div>
+            <main className="container mx-auto px-4 py-16">
+                <h2 className="text-4xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
+                    Notre Collection de Tapis
+                </h2>
 
-          <AnimatePresence>
-            {activeFilter !== "" && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`rounded-lg shadow-lg p-6 mb-6 ${
-                  isDarkMode ? 'bg-gray-800' : 'bg-white'
-                }`}
-              >
-                {activeFilter === "category" && (
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`px-4 py-2 text-sm border rounded transition-colors duration-200 ${
-                          selectedCategory === category
-                            ? isDarkMode
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-blue-500 text-white'
-                            : isDarkMode
-                            ? 'bg-gray-700 border-gray-600'
-                            : 'bg-gray-100 border-gray-300'
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {activeFilter === "price" && (
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-4">
-                      <input
-                        type="range"
-                        min={0}
-                        max={maxPrice}
-                        step={100}
-                        value={priceRange[0]}
-                        onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
-                        className="w-full"
-                      />
-                      <input
-                        type="range"
-                        min={0}
-                        max={maxPrice}
-                        step={100}
-                        value={priceRange[1]}
-                        onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                        className="w-full"
-                      />
+                <div className="mb-8">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
+                        <motion.div
+                            className="relative w-full md:w-1/4"
+                            initial={{opacity: 0, y: -20}}
+                            animate={{opacity: 1, y: 0}}
+                            transition={{duration: 0.5}}
+                        >
+                            <div className="relative bg-transparent flex-grow lg:flex-grow-0">
+                                <input
+                                    className="w-full bg-transparent outline-none rounded-xl border border-neutral-300 dark:border-neutral-500 px-4 py-2 pr-10 text-sm text-black dark:text-white transition-all duration-200 hover:bg-opacity-70 dark:hover:bg-opacity-70"
+                                    placeholder="Rechercher..."
+                                    type="search"
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-300 dark:text-neutral-500"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </svg>
+                            </div>
+                        </motion.div>
+                        <div className="flex gap-2 relative">
+                            {["Catégorie", "Prix", "Trier"].map((option) => (
+                                <div key={option} className="relative">
+                                    <button
+                                        onClick={() => toggleDropdown(option)}
+                                        className="px-4 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 flex items-center"
+                                    >
+                                        {option} <ChevronDown className="ml-2 h-4 w-4"/>
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === option && (
+                                            <motion.div
+                                                initial={{opacity: 0, y: -10}}
+                                                animate={{opacity: 1, y: 0}}
+                                                exit={{opacity: 0, y: -10}}
+                                                transition={{duration: 0.2}}
+                                                className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-neutral-800 ring-1 ring-black ring-opacity-5"
+                                            >
+                                                <div className="py-1">
+                                                    {option === "Catégorie" && categories.map((category) => (
+                                                        <button
+                                                            key={category}
+                                                            onClick={() => {
+                                                                setSelectedCategory(category);
+                                                                setActiveDropdown("");
+                                                            }}
+                                                            className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                        >
+                                                            {category}
+                                                        </button>
+                                                    ))}
+                                                    {option === "Prix" && (
+                                                        <div className="px-4 py-2">
+                                                            <input
+                                                                type="range"
+                                                                min={0}
+                                                                max={maxPrice}
+                                                                step={100}
+                                                                value={priceRange[1]}
+                                                                onChange={(e) => {
+                                                                    setPriceRange([0, Number(e.target.value)]);
+                                                                    setActiveDropdown("");
+                                                                }}
+                                                                className="w-full"
+                                                            />
+                                                            <div
+                                                                className="flex justify-between text-sm text-neutral-600 dark:text-neutral-400">
+                                                                <span>€0</span>
+                                                                <span>€{priceRange[1]}</span>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    {option === "Trier" && (
+                                                        <div className="right-0">
+                                                            <button
+                                                                onClick={() => {
+                                                                    setSortOption("price-asc");
+                                                                    setActiveDropdown("");
+                                                                }}
+                                                                className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                            >
+                                                                Prix: Croissant
+                                                            </button>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setSortOption("price-desc");
+                                                                    setActiveDropdown("");
+                                                                }}
+                                                                className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                            >
+                                                                Prix: Décroissant
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div className="flex justify-between text-sm">
-                      <span>€{priceRange[0]}</span>
-                      <span>€{priceRange[1]}</span>
-                    </div>
-                  </div>
-                )}
-                {activeFilter === "sort" && (
-                  <div className="space-y-2">
-                    {['price-asc', 'price-desc'].map((option) => (
-                      <button
-                        key={option}
-                        onClick={() => setSortOption(option)}
-                        className={`w-full text-left px-4 py-2 text-sm border rounded transition-colors duration-200 ${
-                          sortOption === option
-                            ? isDarkMode
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-blue-500 text-white'
-                            : isDarkMode
-                            ? 'bg-gray-700 border-gray-600'
-                            : 'bg-gray-100 border-gray-300'
-                        }`}
-                      >
-                        Prix: {option === 'price-asc' ? 'Croissant' : 'Décroissant'}
-                      </button>
+
+                    {(selectedCategory || priceRange[1] < maxPrice || sortOption) && (
+                        <motion.div
+                            initial={{opacity: 0, y: -10}}
+                            animate={{opacity: 1, y: 0}}
+                            exit={{opacity: 0, y: -10}}
+                            className="flex flex-wrap gap-2 mt-4"
+                        >
+                            {selectedCategory && (
+                                <div
+                                    className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm flex items-center">
+                                    {selectedCategory}
+                                    <button onClick={() => setSelectedCategory("")} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3"/>
+                                    </button>
+                                </div>
+                            )}
+                            {priceRange[1] < maxPrice && (
+                                <div
+                                    className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm flex items-center">
+                                    €0 - €{priceRange[1]}
+                                    <button onClick={() => setPriceRange([0, maxPrice])}
+                                            className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3"/>
+                                    </button>
+                                </div>
+                            )}
+                            {sortOption && (
+                                <div
+                                    className="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm flex items-center">
+                                    {sortOption === "price-asc" ? "Prix: Croissant" : "Prix: Décroissant"}
+                                    <button onClick={() => setSortOption("")} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3"/>
+                                    </button>
+                                </div>
+                            )}
+                            {(selectedCategory || priceRange[1] < maxPrice || sortOption) && (
+                                <button
+                                    onClick={clearFilters}
+                                    className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 rounded-full text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-300"
+                                >
+                                    Effacer les filtres
+                                </button>
+                            )}
+                        </motion.div>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredProducts.map((product) => (
+                        <motion.div
+                            key={product.id}
+                            initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            exit={{opacity: 0, y: -20}}
+                            transition={{duration: 0.3}}
+                            className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        >
+                            <div className="relative h-64">
+                                <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    className="w-full h-full object-cover"
+                                />
+                                {product.promotions && product.promotions.length > 0 && (
+                                    <span
+                                        className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm">
+                                        {product.promotions[0].discountPercentage}% OFF
+                                    </span>
+                                )}
+                                {!product.availability && (
+                                    <span
+                                        className="absolute top-2 left-2 bg-neutral-600 text-white px-2 py-1 rounded text-sm">
+                                        Rupture de stock
+                                    </span>
+                                )}
+                            </div>
+                            <div className="p-4">
+                                <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-neutral-200">{product.title}</h3>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{product.description}</p>
+                                <div className="flex justify-between items-center mb-2">
+                                    <span
+                                        className="text-lg font-bold text-neutral-800 dark:text-neutral-200">€{product.price}</span>
+                                    <span
+                                        className={`text-sm ${product.availability ? 'text-green-500' : 'text-red-500'}`}>
+                                        {product.availability ? 'En stock' : 'Rupture de stock'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-center mb-4">
+                                    <span
+                                        className="text-sm text-neutral-600 dark:text-neutral-400">{product.material}</span>
+                                    <span
+                                        className="text-sm text-neutral-600 dark:text-neutral-400">Qualité: {product.quality}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <button
+                                        onClick={() => {
+                                            setSelectedProduct(product);
+                                            setShowDialog(true);
+                                        }}
+                                        className="px-4 py-2 text-sm border rounded bg-white dark:bg-neutral-800"
+                                    >
+                                        Voir les détails
+                                    </button>
+                                    <button
+                                        disabled={!product.availability}
+                                        className={`px-4 py-2 text-sm rounded ${product.availability ? 'bg-blue-500 text-white' : 'bg-neutral-300 text-neutral-600 cursor-not-allowed'}`}
+                                    >
+                                        <ShoppingCart className="inline-block mr-2 h-4 w-4"/>
+                                        {product.availability ? 'Ajouter au panier' : 'Indisponible'}
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
                     ))}
-                  </div>
-                )}
-              </motion.div>
+                </div>
+            </main>
+
+            {showDialog && selectedProduct && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white dark:bg-neutral-800 p-6 rounded-lg max-w-md w-full">
+                        <h2 className="text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">{selectedProduct.title}</h2>
+                        <p className="mb-4 text-neutral-600 dark:text-neutral-400">Informations détaillées sur le
+                            tapis.</p>
+                        <div className="grid gap-2 text-neutral-700 dark:text-neutral-300">
+                            <p><strong>Dimensions:</strong> {selectedProduct.length}cm x {selectedProduct.width}cm</p>
+                            <p><strong>Poids:</strong> {selectedProduct.weight}kg</p>
+                            <p><strong>Couleur:</strong> {selectedProduct.color}</p>
+                            <p><strong>Modèle:</strong> {selectedProduct.model}</p>
+                            <p><strong>Référence:</strong> {selectedProduct.reference}</p>
+                            <p><strong>Catégorie:</strong> {selectedProduct.category.name}</p>
+                            <p><strong>Sous-catégorie:</strong> {selectedProduct.subcategory.name}</p>
+                            <p><strong>Type:</strong> {selectedProduct.type.name}</p>
+                            <p><strong>Dernière mise à
+                                jour:</strong> {new Date(selectedProduct.updatedAt).toLocaleDateString()}</p>
+                        </div>
+                        <button
+                            onClick={() => setShowDialog(false)}
+                            className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Fermer
+                        </button>
+                    </div>
+                </div>
             )}
-          </AnimatePresence>
+        </div>
+    );
+}
 
-          {(selectedCategory || priceRange[0] > 0 || priceRange[1] < maxPrice || sortOption) && (
-            <div className="flex flex-wrap gap-2 mt-4">
-              {selectedCategory && (
-                <div className={`px-2 py-1 rounded text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                  {selectedCategory}
-                  <button onClick={() => setSelectedCategory("")} className="ml-2">
-                    ✕
-                  </button>
-                </div>
-              )}
-              {(priceRange[0] > 0 || priceRange[1] < maxPrice) && (
-                <div className={`px-2 py-1 rounded text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                  €{priceRange[0]} - €{priceRange[1]}
-                  <button onClick={() => setPriceRange([0, maxPrice])} className="ml-2">
-                    ✕
-                  </button>
-                </div>
-              )}
-              {sortOption && (
-                <div className={`px-2 py-1 rounded text-sm ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                  {sortOption === "price-asc" ? "Prix: Croissant" : "Prix: Décroissant"}
-                  <button onClick={() => setSortOption("")} className="ml-2">
-                    ✕
-                  </button>
-                </div>
-              )}
+
+export const heroProducts = [
+    {
+        title: "Clair de Lune",
+        link: "https://gomoonbeam.com",
+        thumbnail:
+            "https://plus.unsplash.com/premium_photo-1675738774551-cf86de1fd242?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+        title: "Curseur",
+        link: "https://cursor.so",
+        thumbnail:
+            "https://images.unsplash.com/photo-1680633480092-fe3d1c0a164a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+        title: "Vagabond",
+        link: "https://userogue.com",
+        thumbnail:
+            "https://images.unsplash.com/photo-1675177649590-22a42a90cdd7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+        title: "Éditorial",
+        link: "https://editorially.org",
+        thumbnail:
+            "https://plus.unsplash.com/premium_photo-1675738774365-c542862be2d4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+        title: "Editrix IA",
+        link: "https://editrix.ai",
+        thumbnail:
+            "https://media.istockphoto.com/id/2154121852/photo/close-up-of-a-beautiful-green-carpet-texture.webp?b=1&s=612x612&w=0&k=20&c=iAyOC1gBKFQFterdBqBVJRFFNAKlNcoN_ZLdQW8wCZQ=",
+    },
+    {
+        title: "Pixel Parfait",
+        link: "https://app.pixelperfect.quest",
+        thumbnail:
+            "https://media.istockphoto.com/id/2164989138/photo/voyage-a-fes.webp?b=1&s=612x612&w=0&k=20&c=e2Sg_6xi2kLTZ0LniErKbFFXgZLtpJLxwFwHiGS2OGs=",
+    },
+    {
+        title: "Algochurn",
+        link: "https://algochurn.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/2154080695/photo/close-up-many-different-carpet-samples.jpg?s=612x612&w=0&k=20&c=ZbS2oN6VmxJUeqJkN5gqcj2bXKQi4bR3KEY8hjZc0cc=",
+    },
+    {
+        title: "Aceternity UI",
+        link: "https://ui.aceternity.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/486167735/photo/turkish-carpet.webp?b=1&s=612x612&w=0&k=20&c=w2_UxrZFpFcwdNLEx7yofSyREUqbD1EN4wCuBX2S8qA=",
+    },
+    {
+        title: "Tailwind Master Kit",
+        link: "https://tailwindmasterkit.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/177369817/photo/carpet.webp?b=1&s=612x612&w=0&k=20&c=6nuzc10W9fADLWAht4o7qP5cA2y13Q4LhPPIZGhcegs=",
+    },
+    {
+        title: "SmartBridge",
+        link: "https://smartbridgetech.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/182188253/photo/red-carpet.webp?b=1&s=612x612&w=0&k=20&c=o4oG2m7EOoJ8-w3ZIbTssP4ttNegtX9a1R9QWOduU6g=",
+    },
+    {
+        title: "Renderwork Studio",
+        link: "https://renderwork.studio",
+        thumbnail:
+            "https://media.istockphoto.com/id/185300349/photo/soccer-field.webp?b=1&s=612x612&w=0&k=20&c=ndy2GiCua6xGT5RBMw1SPqwXTPgdncbZmBwf_PoKgDY=",
+    },
+    {
+        title: "Creme Digital",
+        link: "https://cremedigital.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/172452491/photo/ice-blue-carpet.webp?b=1&s=612x612&w=0&k=20&c=HpKwly7e32j-OdIjYtpzq8mRQ89eU1zSwGU1RMz_tkw=",
+    },
+    {
+        title: "Golden Bells Academy",
+        link: "https://goldenbellsacademy.com",
+        thumbnail:
+            "https://media.istockphoto.com/id/172321133/photo/a-close-up-of-a-tan-carpet-swatch.webp?b=1&s=612x612&w=0&k=20&c=YKsOUw-FsagLB1Jftb9Gx78_dGj6S4gdzmxa7B3A2sg=",
+    },
+    {
+        title: "Invoker Labs",
+        link: "https://invoker.lol",
+        thumbnail:
+            "https://plus.unsplash.com/premium_photo-1675802522643-24ad09d1cf36?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNhcnBldCUyMHRleHR1cmV8ZW58MHx8MHx8fDA%3D",
+    },
+    {
+        title: "E Free Invoice",
+        link: "https://efreeinvoice.com",
+        thumbnail:
+            "https://plus.unsplash.com/premium_photo-1675788271687-6a50324324e1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import { X } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+interface Product {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+  length: number;
+  width: number;
+  weight: number;
+  color: string;
+  model: string;
+  reference: string;
+  category: { name: string };
+  subcategory: { name: string };
+  type: { name: string };
+  updatedAt: string;
+  price: string;
+  availability: boolean;
+}
+
+interface EnhancedProductModalProps {
+  product: Product;
+  onClose: () => void;
+}
+
+export default function EnhancedProductModal({ product, onClose }: EnhancedProductModalProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        transition={{ type: "spring", damping: 15 }}
+        className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-xl max-w-4xl w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/2 relative" data-aos="fade-right">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full h-64 md:h-full object-cover"
+            />
+            <span className="absolute top-4 left-4 bg-neutral-800 text-white px-2 py-1 rounded text-sm">
+              €{product.price}
+            </span>
+            <span className={`absolute top-4 right-4 px-2 py-1 rounded text-sm ${product.availability ? 'bg-green-500' : 'bg-red-500'} text-white`}>
+              {product.availability ? 'En stock' : 'Rupture de stock'}
+            </span>
+          </div>
+          <div className="md:w-1/2 p-6 overflow-y-auto max-h-[80vh]" data-aos="fade-left">
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-2xl font-bold text-neutral-800 dark:text-neutral-200">{product.title}</h2>
               <button
-                onClick={clearFilters}
-                className={`px-4 py-2 text-sm border rounded transition-colors duration-200 ${
-                  isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'
-                }`}
+                onClick={onClose}
+                className="text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors duration-200"
               >
-                Effacer les filtres
+                <X size={24} />
               </button>
             </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ${
-                isDarkMode ? 'bg-gray-800' : 'bg-white'
-              }`}
-            >
-              <div className="relative h-64">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover"
-                />
-                {product.promotions && product.promotions.length > 0 && (
-                  <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm">
-                    {product.promotions[0].discountPercentage}% OFF
-                  </div>
-                )}
-                {!product.availability && (
-                  <div className="absolute top-2 left-2 bg-gray-600 text-white px-2 py-1 rounded text-sm">
-                    Rupture de stock
-                  </div>
-                )}
+            <p className="text-neutral-600 dark:text-neutral-400 mb-4">{product.description}</p>
+            <div className="grid grid-cols-2 gap-4 text-sm text-neutral-700 dark:text-neutral-300">
+              <div data-aos="fade-up" data-aos-delay="100">
+                <p className="font-semibold">Dimensions:</p>
+                <p>{product.length}cm x {product.width}cm</p>
               </div>
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
-                <p className={`text-sm mb-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{product.description}</p>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-lg font-bold">€{product.price}</span>
-                  <span className={`text-sm ${product.availability ? 'text-green-500' : 'text-red-500'}`}>
-                    {product.availability ? 'En stock' : 'Rupture de stock'}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center mb-4">
-                  <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{product.material}</span>
-                  <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Qualité: {product.quality}</span>
-                </div>
-                <div className="flex justify-between">
-                  <button
-                    onClick={() => {
-                      setSelectedProduct(product)
-                      setShowDialog(true)
-                    }}
-                    className={`px-4 py-2 text-sm border rounded transition-colors duration-200 ${
-                      isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-100 border-gray-300'
-                    }`}
-                  >
-                    Voir les détails
-                  </button>
-                  <button
-                    disabled={!product.availability}
-                    className={`px-4 py-2 text-sm rounded transition-colors duration-200 ${
-                      product.availability
-                        ? isDarkMode
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-blue-500 text-white'
-                        : 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                    }`}
-                  >
-                    🛒 {product.availability ? 'Ajouter au panier' : 'Indisponible'}
-                  </button>
-                </div>
+              <div data-aos="fade-up" data-aos-delay="150">
+                <p className="font-semibold">Poids:</p>
+                <p>{product.weight}kg</p>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {showDialog && selectedProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className={`p-6 rounded-lg max-w-md w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            <h2 className="text-2xl font-bold mb-4">{selectedProduct.title}</h2>
-            <p className={`mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Informations détaillées sur le tapis.</p>
-            <div className={`grid gap-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-              <p><strong>Dimensions:</strong> {selectedProduct.length}cm x {selectedProduct.width}cm</p>
-              <p><strong>Poids:</strong> {selectedProduct.weight}kg</p>
-              <p><strong>Couleur:</strong> {selectedProduct.color}</p>
-              <p><strong>Modèle:</strong> {selectedProduct.model}</p>
-              <p><strong>Référence:</strong> {selectedProduct.reference}</p>
-              <p><strong>Catégorie:</strong> {selectedProduct.category.name}</p>
-              <p><strong>Sous-catégorie:</strong> {selectedProduct.subcategory.name}</p>
-              <p><strong>Type:</strong> {selectedProduct.type.name}</p>
-              <p><strong>Dernière mise à jour:</strong> {new Date(selectedProduct.updatedAt).toLocaleDateString()}</p>
+              <div data-aos="fade-up" data-aos-delay="200">
+                <p className="font-semibold">Couleur:</p>
+                <p>{product.color}</p>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="250">
+                <p className="font-semibold">Modèle:</p>
+                <p>{product.model}</p>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="300">
+                <p className="font-semibold">Référence:</p>
+                <p>{product.reference}</p>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="350">
+                <p className="font-semibold">Catégorie:</p>
+                <p>{product.category.name}</p>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="400">
+                <p className="font-semibold">Sous-catégorie:</p>
+                <p>{product.subcategory.name}</p>
+              </div>
+              <div data-aos="fade-up" data-aos-delay="450">
+                <p className="font-semibold">Type:</p>
+                <p>{product.type.name}</p>
+              </div>
             </div>
-            <button
-              onClick={() => setShowDialog(false)}
-              className={`mt-4 w-full font-bold py-2 px-4 rounded transition-colors duration-200 ${
-                isDarkMode ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-500 hover:bg-blue-600 text-white'
-              }`}
-            >
-              Fermer
-            </button>
+            <div className="mt-6" data-aos="fade-up" data-aos-delay="500">
+              <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                Dernière mise à jour: {new Date(product.updatedAt).toLocaleDateString()}
+              </p>
+            </div>
+            <div className="mt-6" data-aos="fade-up" data-aos-delay="550">
+              <button
+                onClick={onClose}
+                className="w-full bg-neutral-800 hover:bg-neutral-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
+              >
+                Fermer
+              </button>
+            </div>
           </div>
         </div>
-      )}
-    </div>
-  )
+      </motion.div>
+    </motion.div>
+  );
 }
-
-
-
-                                className="w-full p-3 pl-10 border border-neutral-300 dark:border-neutral-700 rounded-full bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-400 transition-all duration-300"
