@@ -1,0 +1,206 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "length": 300,
+      "width": 200,
+      "color": "Beige",
+      "price": "3999.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Luxurious hand-woven Persian silk carpet with intricate floral patterns.",
+      "weight": 8.5,
+      "model": "Royal Persian",
+      "quality": "Premium",
+      "material": "Silk",
+      "title": "Tapis de Soie Persane Royal",
+      "reference": "LUX-SOIE-PER-001",
+      "image": "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-08-29T10:00:00Z",
+      "category": {
+        "id": "luxe",
+        "name": "Luxe"
+      },
+      "subcategory": {
+        "id": "soie",
+        "name": "Soie"
+      },
+      "type": {
+        "id": "persane",
+        "name": "Tapis de Soie Persane",
+        "thumbnail": "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 2,
+      "length": 250,
+      "width": 150,
+      "color": "Gris",
+      "price": "2499.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Elegant contemporary geometric carpet with a minimalist design.",
+      "weight": 6.0,
+      "model": "Geo Modern",
+      "quality": "High",
+      "material": "Wool blend",
+      "title": "Tapis Géométrique Contemporain Élégant",
+      "reference": "MOD-CONT-GEO-001",
+      "image": "https://images.unsplash.com/photo-1680633480092-fe3d1c0a164a?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-08-28T14:30:00Z",
+      "category": {
+        "id": "moderne",
+        "name": "Moderne"
+      },
+      "subcategory": {
+        "id": "contemporain",
+        "name": "Contemporain"
+      },
+      "type": {
+        "id": "geometrique",
+        "name": "Tapis Géométrique Contemporain",
+        "thumbnail": "https://images.unsplash.com/photo-1680633480092-fe3d1c0a164a?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 3,
+      "length": 400,
+      "width": 300,
+      "color": "Rouge et Or",
+      "price": "5999.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Magnifique tapis oriental avec des motifs complexes et une bordure élaborée.",
+      "weight": 12.0,
+      "model": "Splendeur Orientale",
+      "quality": "Luxe",
+      "material": "Laine et soie",
+      "title": "Tapis Oriental Splendeur Rouge et Or",
+      "reference": "ORI-LUX-RG-001",
+      "image": "https://images.unsplash.com/photo-1600166802986-168ad905ae47?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-08-30T09:15:00Z",
+      "category": {
+        "id": "oriental",
+        "name": "Oriental"
+      },
+      "subcategory": {
+        "id": "traditionnel",
+        "name": "Traditionnel"
+      },
+      "type": {
+        "id": "oriental-luxe",
+        "name": "Tapis Oriental de Luxe",
+        "thumbnail": "https://images.unsplash.com/photo-1600166802986-168ad905ae47?q=80&w=2070&auto=format&fit=crop"
+      },
+      "promotions": [
+        {
+          "id": 1,
+          "discountPercentage": 10,
+          "startDate": "2024-09-01T00:00:00Z",
+          "endDate": "2024-09-30T23:59:59Z"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "length": 200,
+      "width": 140,
+      "color": "Bleu marine",
+      "price": "1299.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis moderne à poils longs, parfait pour un salon confortable.",
+      "weight": 5.5,
+      "model": "Confort Shaggy",
+      "quality": "Bonne",
+      "material": "Polyester",
+      "title": "Tapis Shaggy Bleu Marine",
+      "reference": "MOD-SHAG-BM-001",
+      "image": "https://images.unsplash.com/photo-1600166806219-2cef7724ae93?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-08-31T11:45:00Z",
+      "category": {
+        "id": "moderne",
+        "name": "Moderne"
+      },
+      "subcategory": {
+        "id": "shaggy",
+        "name": "Shaggy"
+      },
+      "type": {
+        "id": "shaggy-uni",
+        "name": "Tapis Shaggy Uni",
+        "thumbnail": "https://images.unsplash.com/photo-1600166806219-2cef7724ae93?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 5,
+      "length": 350,
+      "width": 250,
+      "color": "Multicolore",
+      "price": "4299.99",
+      "availability": false,
+      "condition": "New",
+      "description": "Tapis kilim artisanal aux motifs géométriques colorés, tissé à la main.",
+      "weight": 7.5,
+      "model": "Kilim Artisanal",
+      "quality": "Artisanale",
+      "material": "Laine",
+      "title": "Tapis Kilim Artisanal Multicolore",
+      "reference": "ART-KILIM-MC-001",
+      "image": "https://images.unsplash.com/photo-1600166804477-6d4a60b78bdf?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-09-01T08:30:00Z",
+      "category": {
+        "id": "artisanal",
+        "name": "Artisanal"
+      },
+      "subcategory": {
+        "id": "kilim",
+        "name": "Kilim"
+      },
+      "type": {
+        "id": "kilim-geometrique",
+        "name": "Tapis Kilim Géométrique",
+        "thumbnail": "https://images.unsplash.com/photo-1600166804477-6d4a60b78bdf?q=80&w=2070&auto=format&fit=crop"
+      }
+    },
+    {
+      "id": 6,
+      "length": 180,
+      "width": 120,
+      "color": "Vert forêt",
+      "price": "899.99",
+      "availability": true,
+      "condition": "New",
+      "description": "Tapis d'extérieur résistant aux intempéries, idéal pour la terrasse ou le jardin.",
+      "weight": 3.5,
+      "model": "Oasis Outdoor",
+      "quality": "Durable",
+      "material": "Polypropylène",
+      "title": "Tapis d'Extérieur Vert Forêt",
+      "reference": "OUT-GARD-VF-001",
+      "image": "https://images.unsplash.com/photo-1600166792964-84f80b4e5915?q=80&w=2070&auto=format&fit=crop",
+      "updatedAt": "2024-09-02T13:20:00Z",
+      "category": {
+        "id": "exterieur",
+        "name": "Extérieur"
+      },
+      "subcategory": {
+        "id": "terrasse",
+        "name": "Terrasse"
+      },
+      "type": {
+        "id": "outdoor-uni",
+        "name": "Tapis d'Extérieur Uni",
+        "thumbnail": "https://images.unsplash.com/photo-1600166792964-84f80b4e5915?q=80&w=2070&auto=format&fit=crop"
+      },
+      "promotions": [
+        {
+          "id": 2,
+          "discountPercentage": 15,
+          "startDate": "2024-09-15T00:00:00Z",
+          "endDate": "2024-10-15T23:59:59Z"
+        }
+      ]
+    }
+  ]
+}
