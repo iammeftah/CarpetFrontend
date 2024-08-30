@@ -8,6 +8,7 @@ import {Homepage} from "./pages/Homepage"; // Import AOS styles
 import { TapisPage } from './pages/nos-tapis/Tapis';
 import Aboutpage from './pages/Aboutpage';
 import Contact from "./pages/Contact";
+import CarpetCustomizer from "./pages/CustomCarpets";
 
 
 
@@ -54,7 +55,7 @@ function App() {
                     <Route path="/about" element={<Aboutpage />} />
                     <Route path="/nos-tapis" element={<NosTapis />} />
                     <Route path="/tapis" element={<TapisPage />} />
-                    {/*<Route path="/custom" element={<TapisPersonalise />} />*/}
+                    <Route path="/custom" element={<CarpetCustomizer />} />
                     <Route path="/nouvelle-collection" element={<NouvelleCollection />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/espace-pros" element={<EspacePros />} />
