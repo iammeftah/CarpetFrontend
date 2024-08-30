@@ -102,7 +102,7 @@ export function Homepage() {
                 </AuroraBackground>
             </div>
 
-            <main className="container mx-auto px-4  py-16 text-black dark:text-white min-h-screen">
+            <main className="w-full px-4 md:px-32 py-16 text-black dark:text-white min-h-screen  bg-neutral-50 dark:bg-[#18181b] ">
                 <h2 className="text-4xl font-bold text-center mb-12">Explorez Nos Collections</h2>
 
                 {/* Categories - Updated for consistent wrapping */}

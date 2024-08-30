@@ -27,9 +27,9 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, toggleDarkMo
                                   d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
-                    <a className="text-2xl font-bold text-black dark:text-white flex items-center justify-start mb-6"
+                    <a className="text-2xl font-bold text-black dark:text-white flex items-center justify-start mb-12"
                        href="/">
-                        ARTCO
+                        EXCELLENCE TAPIS
                     </a>
                     <nav>
                         <ul className="space-y-4">
@@ -97,7 +97,7 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({ isOpen, onClose, toggleDarkMo
             </div>
             <div className="p-4 border-t border-neutral-200 dark:border-neutral-700">
                 <div className="text-center text-sm text-neutral-500">
-                    All Copyrights reserved Artco - Powered by Maya Digital 2024
+                    All Copyrights reserved Excellence Tapis - Powered by Maya Digital 2024
                     <div className="mt-2 flex items-center justify-center gap-4">
                         {/* Social media icons */}
                         <a className="text-muted-foreground hover:text-primary" href="#" rel="ugc">

@@ -58,9 +58,9 @@ export default function Header() {
                 }`}>
                 {!isMobile && !scrolled && (
                     <div className="flex items-center justify-center w-full my-4 lg:mb-0">
-                        <a className="text-2xl font-bold text-black dark:text-white items-center justify-center hidden md:flex"
+                        <a className="text-3xl font-bold text-black dark:text-white items-center justify-center hidden md:flex"
                            href="/">
-                            ARTCO
+                            EXCELLENCE TAPIS
                         </a>
                     </div>
                 )}

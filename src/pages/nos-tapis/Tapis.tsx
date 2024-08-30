@@ -127,7 +127,7 @@ export function TapisPage() {
             </motion.div>
 
             <main id="gallery" className="container mx-auto px-4 py-16">
-                <h2 className="text-4xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
+                <h2 data-aos="fade-up" className="text-4xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
                     Notre Collection de Tapis
                 </h2>
 
