@@ -146,7 +146,7 @@ export function TapisPage() {
                         <div className="flex gap-2 relative">
                             {[
                                 {name: "Catégorie", options: categories},
-                                {name: "Prix", options: ["€0 - €1000", "€1000 - €3000", "€3000 - €6000"]},
+                                {name: "Prix", options: ["0 MAD - 1000 MAD", "1000 MAD - 3000 MAD", "3000 MAD - 6000 MAD"]},
                                 {name: "Trier par", options: ["Prix: Croissant", "Prix: Décroissant"]}
                             ].map((filter) => (
                                 <div key={filter.name} className="relative">
@@ -173,7 +173,7 @@ export function TapisPage() {
                                                                 if (filter.name === "Catégorie") {
                                                                     setSelectedCategory(option);
                                                                 } else if (filter.name === "Prix") {
-                                                                    const [min, max] = option.split(" - ").map(price => parseInt(price.replace("€", "")));
+                                                                    const [min, max] = option.split(" - ").map(price => parseInt(price.replace("€", "MAD")));
                                                                     setPriceRange([min, max]);
                                                                 } else if (filter.name === "Trier par") {
                                                                     setSortOption(option === "Prix: Croissant" ? "price-asc" : "price-desc");
@@ -213,7 +213,7 @@ export function TapisPage() {
                             {priceRange[1] < maxPrice && (
                                 <div
                                     className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
-                                    €{priceRange[0]} - €{priceRange[1]}
+                                    {priceRange[0]}MAD - MAD{priceRange[1]}
                                     <button onClick={() => setPriceRange([0, maxPrice])}
                                             className="ml-2 focus:outline-none">
                                         <X className="h-3 w-3"/>
@@ -275,7 +275,7 @@ export function TapisPage() {
                                 <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{product.description}</p>
                                 <div className="flex justify-between items-center mb-2">
                                     <span
-                                        className="text-lg font-bold text-neutral-800 dark:text-neutral-200">€{product.price}</span>
+                                        className="text-lg font-bold text-neutral-800 dark:text-neutral-200">{product.price} MAD </span>
                                     <span
                                         className={`text-sm ${product.availability ? 'text-neutral-600' : 'text-neutral-400'}`}>
               {product.availability ? 'En stock' : 'Rupture de stock'}
