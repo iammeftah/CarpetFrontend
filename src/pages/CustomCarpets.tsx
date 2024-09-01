@@ -18,12 +18,12 @@ const PINK = '#f472b6';
 const EMERALD = '#10b981';
 
 const colorOptions = [
-    { value: PURPLE, label: 'Royal Purple' },
-    { value: DARK_CYAN, label: 'Deep Ocean' },
-    { value: WARM_GRAY, label: 'Stonewash' },
-    { value: LIGHT_BLUE, label: 'Sky Blue' },
-    { value: PINK, label: 'Blush Pink' },
-    { value: EMERALD, label: 'Emerald Green' },
+    { value: PURPLE, label: 'Pourpre Royal' },
+    { value: DARK_CYAN, label: 'Océan Profond' },
+    { value: WARM_GRAY, label: 'Pierre Lavée' },
+    { value: LIGHT_BLUE, label: 'Bleu Ciel' },
+    { value: PINK, label: 'Rose Poudré' },
+    { value: EMERALD, label: 'Vert Émeraude' },
 ];
 
 const CarpetCustomizer: React.FC = () => {
@@ -47,7 +47,7 @@ const CarpetCustomizer: React.FC = () => {
     }, [])
 
     const calculatePrice = useCallback(() => {
-        let newPrice = 299.99; // base price
+        let newPrice = 299.99; // prix de base
         newPrice += (carpet.length * carpet.width * 0.01);
         setPrice(newPrice);
     }, [carpet.length, carpet.width])
@@ -92,7 +92,7 @@ const CarpetCustomizer: React.FC = () => {
         setTimeout(() => {
             setLoading(false)
             setShowToast(true)
-            setToastMessage('Carpet added to cart successfully!')
+            setToastMessage('Tapis ajouté au panier avec succès !')
             setTimeout(() => setShowToast(false), 3000)
         }, 1500)
     }
@@ -102,13 +102,13 @@ const CarpetCustomizer: React.FC = () => {
             <Header />
             <main className="pt-8 md:pt-32 flex items-center justify-center w-full min-h-screen">
                 <div className="container mx-auto px-8 md:px-64 py-8">
-                    <h1 className="text-4xl font-bold mb-6">Custom Carpet Designer</h1>
+                    <h1 className="text-4xl font-bold mb-6">Concepteur de Tapis Personnalisé</h1>
                     <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-md p-6">
-                        <h2 className="text-2xl font-semibold mb-4">Customize Your Carpet</h2>
+                        <h2 className="text-2xl font-semibold mb-4">Personnalisez Votre Tapis</h2>
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label htmlFor="length" className="block text-sm font-medium mb-1">Length (cm)</label>
+                                    <label htmlFor="length" className="block text-sm font-medium mb-1">Longueur (cm)</label>
                                     <input
                                         id="length"
                                         type="number"
@@ -118,7 +118,7 @@ const CarpetCustomizer: React.FC = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor="width" className="block text-sm font-medium mb-1">Width (cm)</label>
+                                    <label htmlFor="width" className="block text-sm font-medium mb-1">Largeur (cm)</label>
                                     <input
                                         id="width"
                                         type="number"
@@ -134,12 +134,12 @@ const CarpetCustomizer: React.FC = () => {
                                     id="description"
                                     value={carpet.description}
                                     onChange={(e) => updateCarpet('description', e.target.value)}
-                                    className="w-full px-3 py-2 border rounded-md dark:bg-neutral-700 dark:border-neutral-600"
+                                    className="resize-none w-full px-3 py-2 border rounded-md dark:bg-neutral-700 dark:border-neutral-600"
                                     rows={3}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Color</label>
+                                <label className="block text-sm font-medium mb-2">Couleur</label>
                                 <div className="flex flex-wrap gap-4">
                                     {colorOptions.map((option) => (
                                         <label key={option.value} className="flex items-center space-x-2 cursor-pointer">
@@ -159,7 +159,7 @@ const CarpetCustomizer: React.FC = () => {
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-2">Upload Carpet Image</label>
+                                <label className="block text-sm font-medium mb-2">Télécharger une Image de Tapis</label>
                                 <UploadImage onChange={handleImageUpload} />
                             </div>
                             {carpetImage && (
@@ -176,10 +176,10 @@ const CarpetCustomizer: React.FC = () => {
                                     {loading ? (
                                         <>
                                             <Loader2 className="inline-block mr-2 h-4 w-4 animate-spin"/>
-                                            Adding to Cart...
+                                            Ajout au Panier...
                                         </>
                                     ) : (
-                                        `Add to Cart - $${price.toFixed(2)}`
+                                        `Ajouter au Panier - ${price.toFixed(2)} €`
                                     )}
                                 </button>
                             </div>
@@ -188,7 +188,7 @@ const CarpetCustomizer: React.FC = () => {
                 </div>
             </main>
             {showToast && (
-                <div className="fixed bottom-4 right-4 bg-neutral-700 text-neutral-100 py-2 px-4 rounded-md shadow-md">
+                <div data-aos="fade-left" className="fixed bottom-4 right-4 bg-neutral-700 text-neutral-100 py-2 px-4 rounded-md shadow-md">
                     <p className="text-sm font-semibold">{toastMessage}</p>
                 </div>
             )}

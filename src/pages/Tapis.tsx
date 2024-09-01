@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { HeroParallax } from "../../components/ui/hero-parallax";
-import Header from "../../components/Header";
+import { HeroParallax } from "../components/ui/hero-parallax";
+import Header from "../components/Header";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Search, ChevronDown, ShoppingCart, X, ChevronsDown } from 'lucide-react';
-import carpetData from '../../carpetData.json';
-import ProductDetails from "../../components/ProductDetails";
+import carpetData from '../carpetData.json';
+import ProductDetails from "../components/ProductDetails";
 
 interface Product {
     id: number;
@@ -121,7 +121,7 @@ export function TapisPage() {
                         repeatType: "reverse",
                     }}
                 >
-                    <span className="text-sm mb-2">Scroll down for more</span>
+                    <span className="text-sm mb-2">Faites défiler vers le bas pour en savoir plus</span>
                     <ChevronsDown className="h-6 w-6 mx-auto"/>
                 </motion.div>
             </motion.div>
