@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Phone, Mail, MessageCircle, Send, Clock, Facebook, Instagram, Twitter, Search, X } from 'lucide-react'
+import { MapPin, Phone, Mail, MessageCircle, Send, Clock, Facebook, Instagram, Twitter, Search, X, Linkedin } from 'lucide-react'
 import Header from "../components/Header"
 
 export default function Contact() {
@@ -31,11 +31,12 @@ export default function Contact() {
     }
 
     const filteredSocialLinks = [
-        { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/luxecarpets' },
-        { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/luxecarpets' },
-        { name: 'Twitter', icon: Twitter, url: 'https://www.twitter.com/luxecarpets' }
+        { name: 'Facebook', icon: Facebook, url: 'https://web.facebook.com/tapisexcellences/?locale=fr_FR&_rdc=1&_rdr' },
+        { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/tapis_excellences/' },
+        { name: 'Twitter', icon: Linkedin, url: 'https://www.linkedin.com/in/youssef-bouzouba-3ab9201a/?locale=en_US' }
     ].filter(link => link.name.toLowerCase().includes(searchQuery.toLowerCase()))
 
+    // @ts-ignore
     return (
         <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
             <Header />
@@ -92,10 +93,33 @@ export default function Contact() {
                             <div className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-lg">
                                 <h3 className="text-xl font-semibold mb-4 text-neutral-800 dark:text-neutral-100">Informations du magasin</h3>
                                 <div className="space-y-2 text-neutral-600 dark:text-neutral-300">
-                                    <p className="flex items-center"><MapPin className="mr-2 flex-shrink-0"/> 123 Rue des Tapis, Ville Douillette, PC 12345</p>
-                                    <p className="flex items-center"><Phone className="mr-2 flex-shrink-0"/> +1 (555) 123-4567</p>
-                                    <p className="flex items-center"><Mail className="mr-2 flex-shrink-0"/> info@luxecarpets.com</p>
-                                    <p className="flex items-center"><Clock className="mr-2 flex-shrink-0"/> Lun-Ven: 9h-20h, Sam: 10h-18h, Dim: Fermé</p>
+                                    <p className="flex items-center"><MapPin className="mr-2 flex-shrink-0"/> 30 Av.
+                                        Hamza Ben Abd Elmouttalib, Bourmanna, Fès 30050</p>
+                                    <p className="flex items-center"><Phone className="mr-2 flex-shrink-0"/> 0664177758
+                                    </p>
+                                    <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> info@tapisbouzoubaa.com
+                                    </p>
+                                    <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> youssef@tapisbouzoubaa.com
+
+                                    </p>
+                                    <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> najwa@tapisbouzoubaa.com
+
+                                    </p>
+                                    <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> info@tapisexcellence.com
+
+                                    </p> <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> youssef@tapisexcellence.com
+
+                                </p> <p className="flex items-center"><Mail
+                                        className="mr-2 flex-shrink-0"/> najwa@tapisexcellence.com
+
+                                </p>
+
+
                                 </div>
                             </div>
                             <div className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-lg">
@@ -128,7 +152,7 @@ export default function Contact() {
                                     className="mt-4 aspect-video rounded-lg overflow-hidden"
                                 >
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1841902907894!2d-73.98651668459473!3d40.74881097932847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1629794000000!5m2!1sen!2sus"
+                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12590.805390844042!2d-4.9915789!3d34.0175917!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd9f8bfc160d420b%3A0xf0b8395919df1273!2sTapis%20Excellence!5e1!3m2!1sfr!2sma!4v1725105665960!5m2!1sfr!2sma"
                                         width="100%"
                                         height="100%"
                                         style={{border: 0}}

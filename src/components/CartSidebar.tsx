@@ -35,13 +35,13 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, products }) 
                                     <h3 className="font-semibold text-black dark:text-white">{product.name}</h3>
                                     <p className="text-sm text-black dark:text-white opacity-70">Quantité: {product.quantity}</p>
                                 </div>
-                                <p className="text-black dark:text-white">{product.price * product.quantity}€</p>
+                                <p className="text-black dark:text-white">{product.price * product.quantity}MAD</p>
                             </div>
                         ))}
                         <div className="mt-6 pt-6 border-t border-black dark:border-white border-opacity-20">
                             <div className="flex justify-between items-center">
                                 <h3 className="text-lg font-semibold text-black dark:text-white">Total</h3>
-                                <p className="text-lg font-semibold text-black dark:text-white">{total}€</p>
+                                <p className="text-lg font-semibold text-black dark:text-white">{total}MAD</p>
                             </div>
                         </div>
                         <button className="mt-6 w-full bg-black dark:bg-white text-white dark:text-black py-2 px-4 rounded hover:bg-opacity-80 dark:hover:bg-opacity-80 transition-colors duration-200">
