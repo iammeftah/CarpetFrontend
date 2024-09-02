@@ -4,8 +4,8 @@ import './App.css';
 import Header from "./components/Header";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import {Homepage} from "./pages/Homepage"; // Import AOS styles
-import { TapisPage } from './pages/Tapis';
+import {Homepage} from "./pages/Homepage";
+import {TapisPage} from './pages/Tapis';
 import Aboutpage from './pages/Aboutpage';
 import Contact from "./pages/Contact";
 import CarpetCustomizer from "./pages/CustomCarpets";

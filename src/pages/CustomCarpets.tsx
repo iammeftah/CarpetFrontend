@@ -179,7 +179,7 @@ const CarpetCustomizer: React.FC = () => {
                                             Ajout au Panier...
                                         </>
                                     ) : (
-                                        `Ajouter au Panier - ${price.toFixed(2)} €`
+                                        `Demander Tapis`
                                     )}
                                 </button>
                             </div>
