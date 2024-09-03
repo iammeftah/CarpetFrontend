@@ -180,54 +180,7 @@ export default function Contact() {
                     {chatOpen ? <X size={24}/> : <MessageCircle size={24}/>}
                 </motion.button>
             </motion.div>
-            <AnimatePresence>
-                {chatOpen && (
-                    <motion.div
-                        className="fixed bottom-24 left-4 right-4 md:right-4 md:left-auto md:w-100 bg-white dark:bg-neutral-800 rounded-lg shadow-lg overflow-hidden flex flex-col"
-                        initial={{opacity: 0, y: 50, scale: 0.3}}
-                        animate={{opacity: 1, y: 0, scale: 1}}
-                        exit={{opacity: 0, y: 50, scale: 0.3}}
-                        transition={{type: 'spring', damping: 25, stiffness: 500}}
-                        style={{height: "60vh"}}
-                    >
-                        <div className="p-4 bg-neutral-100 dark:bg-neutral-700">
-                            <h3 className="font-semibold text-neutral-800 dark:text-neutral-100">Discutez avec nous</h3>
-                        </div>
-                        <div className="p-4 flex-grow overflow-y-auto">
-                            {messages.map((msg) => (
-                                <motion.div
-                                    key={msg.id}
-                                    className={`mb-2 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}
-                                    initial={{opacity: 0, y: 20}}
-                                    animate={{opacity: 1, y: 0}}
-                                >
-                                    <span
-                                        className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-neutral-200 dark:bg-neutral-600 text-neutral-800 dark:text-neutral-100' : 'bg-neutral-800 dark:bg-neutral-200 text-neutral-100 dark:text-neutral-800'}`}>
-                                        {msg.text}
-                                    </span>
-                                </motion.div>
-                            ))}
-                        </div>
-                        <form onSubmit={handleChatSubmit} className="p-4 bg-neutral-100 dark:bg-neutral-700 flex">
-                            <input
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                className="flex-grow bg-white dark:bg-neutral-800 outline-none rounded-l-xl border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm text-neutral-800 dark:text-neutral-200 transition-all duration-200"
-                                placeholder="Tapez votre message"
-                                type="text"
-                            />
-                            <motion.button
-                                type="submit"
-                                className="bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-800 rounded-r-xl px-4 py-2 hover:bg-neutral-700 dark:hover:bg-neutral-300 transition-colors duration-200"
-                                whileHover={{scale: 1.05}}
-                                whileTap={{scale: 0.95}}
-                            >
-                                <Send size={18}/>
-                            </motion.button>
-                        </form>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            
         </div>
     )
 }
