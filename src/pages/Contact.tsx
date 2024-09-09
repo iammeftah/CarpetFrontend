@@ -180,7 +180,6 @@ export default function Contact() {
                     {chatOpen ? <X size={24}/> : <MessageCircle size={24}/>}
                 </motion.button>
             </motion.div>
-            
         </div>
     )
 }
