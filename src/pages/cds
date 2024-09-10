@@ -1,0 +1,168 @@
+import React, { useState, useEffect } from 'react';
+import { HeroParallax } from "../components/ui/hero-parallax";
+import Header from "../components/Header";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { Search, ChevronDown, ShoppingCart, X, ChevronsDown } from 'lucide-react';
+import ProductDetails from "../components/ProductDetails";
+import axios from 'axios';
+import { environment } from '../environments/environment';
+
+// ... (keep all the existing interfaces)
+
+export function TapisPage() {
+    // ... (keep all the existing state variables)
+
+    const [orderStatus, setOrderStatus] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+    // ... (keep all the existing useEffect hooks and functions)
+
+    const handleOrderSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!currentProduct) return;
+
+        try {
+            const response = await axios.post('http://localhost:8001/commande/add', {
+                ...orderFormData,
+                product: currentProduct
+            });
+            console.log('Order submitted:', response.data);
+            setShowOrderModal(false);
+            setOrderStatus({ message: 'Commande passée avec succès!', type: 'success' });
+            // Reset form data
+            setOrderFormData({
+                full_name: '',
+                telephone: '',
+                adress: '',
+                date: '',
+                email: ''
+            });
+        } catch (error) {
+            console.error('Error submitting order:', error);
+            setOrderStatus({ message: 'Erreur lors de la passation de la commande. Veuillez réessayer.', type: 'error' });
+        }
+    };
+
+    // ... (keep the existing return statement up to the product grid)
+
+    return (
+        <div className="bg-neutral-50 dark:bg-neutral-900 min-h-screen">
+            {/* ... (keep the existing JSX up to the product grid) */}
+
+            {/* Order Status Message */}
+            <AnimatePresence>
+                {orderStatus && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -50 }}
+                        className={`fixed top-4 right-4 p-4 rounded-md ${
+                            orderStatus.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                        } text-white z-50`}
+                    >
+                        {orderStatus.message}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Order Modal */}
+            <AnimatePresence>
+                {showOrderModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-xl max-w-md w-full"
+                        >
+                            <h2 className="text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-200">Finaliser la commande</h2>
+                            <form onSubmit={handleOrderSubmit} className="space-y-4">
+                                <div>
+                                    <label htmlFor="full_name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Nom complet</label>
+                                    <input
+                                        type="text"
+                                        id="full_name"
+                                        name="full_name"
+                                        value={orderFormData.full_name}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-neutral-500 focus:ring-neutral-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="telephone" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Téléphone</label>
+                                    <input
+                                        type="tel"
+                                        id="telephone"
+                                        name="telephone"
+                                        value={orderFormData.telephone}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-neutral-500 focus:ring-neutral-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="adress" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Adresse</label>
+                                    <input
+                                        type="text"
+                                        id="adress"
+                                        name="adress"
+                                        value={orderFormData.adress}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-neutral-500 focus:ring-neutral-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="date" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Date</label>
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        name="date"
+                                        value={orderFormData.date}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-neutral-500 focus:ring-neutral-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={orderFormData.email}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-neutral-500 focus:ring-neutral-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                                    />
+                                </div>
+                                <div className="flex justify-end space-x-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowOrderModal(false)}
+                                        className="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-200 rounded-md hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="px-4 py-2 text-sm font-medium text-white bg-neutral-800 rounded-md hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 dark:bg-neutral-200 dark:text-neutral-800 dark:hover:bg-neutral-300"
+                                    >
+                                        Confirmer
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ... (keep the existing ProductDetails modal) */}
+        </div>
+    );
+}

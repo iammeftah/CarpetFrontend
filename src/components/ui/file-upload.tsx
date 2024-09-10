@@ -52,7 +52,7 @@ export const FileUpload = ({
     });
 
     return (
-        <div className="w-full" {...getRootProps()}>
+        <div className="w-full " {...getRootProps()}>
             <motion.div
                 onClick={handleClick}
                 whileHover="animate"
@@ -86,7 +86,7 @@ export const FileUpload = ({
                                         "shadow-sm"
                                     )}
                                 >
-                                    <div className="flex justify-between w-full items-center gap-4">
+                                    <div className="flex justify-between w-full items-center gap-4 ">
                                         <motion.p
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}

@@ -114,7 +114,7 @@ const CarpetCustomizer: React.FC = () => {
                                         type="number"
                                         value={carpet.length}
                                         onChange={(e) => updateCarpet('length', parseInt(e.target.value))}
-                                        className="w-full px-3 py-2 border rounded-md dark:bg-neutral-700 dark:border-neutral-600"
+                                        className="px-2 py-2 mt-1 text-sm text-black dark:text-white block w-full bg-white dark:bg-opacity-5 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-500 dark:hover:border-neutral-200 rounded-md shadow-sm placeholder:text-neutral-400 placeholder:text-opacity-100 dark:placeholder:text-neutral-500 duration-300"
                                     />
                                 </div>
                                 <div>
@@ -124,7 +124,7 @@ const CarpetCustomizer: React.FC = () => {
                                         type="number"
                                         value={carpet.width}
                                         onChange={(e) => updateCarpet('width', parseInt(e.target.value))}
-                                        className="w-full px-3 py-2 border rounded-md dark:bg-neutral-700 dark:border-neutral-600"
+                                        className="px-2 py-2 mt-1 text-sm text-black dark:text-white block w-full bg-white dark:bg-opacity-5 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-500 dark:hover:border-neutral-200 rounded-md shadow-sm placeholder:text-neutral-400 placeholder:text-opacity-100 dark:placeholder:text-neutral-500 duration-300"
                                     />
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ const CarpetCustomizer: React.FC = () => {
                                     id="description"
                                     value={carpet.description}
                                     onChange={(e) => updateCarpet('description', e.target.value)}
-                                    className="resize-none w-full px-3 py-2 border rounded-md dark:bg-neutral-700 dark:border-neutral-600"
+                                    className="resize-none px-2 py-2 mt-1 text-sm text-black dark:text-white block w-full bg-white dark:bg-opacity-5 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-500 dark:hover:border-neutral-200 rounded-md shadow-sm placeholder:text-neutral-400 placeholder:text-opacity-100 dark:placeholder:text-neutral-500 duration-300"
                                     rows={3}
                                 />
                             </div>
@@ -170,7 +170,7 @@ const CarpetCustomizer: React.FC = () => {
                             <div className="w-full flex justify-center">
                                 <button
                                     onClick={addToCart}
-                                    className="w-full md:w-1/3 mt-6 bg-neutral-800 text-neutral-100 py-2 px-4 rounded-md hover:bg-neutral-700 transition-colors disabled:bg-neutral-400"
+                                    className="px-4 py-2 text-sm font-medium text-white bg-neutral-800 rounded-md hover:bg-neutral-700  dark:bg-neutral-200 dark:text-neutral-800 dark:hover:bg-neutral-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                                     disabled={loading}
                                 >
                                     {loading ? (

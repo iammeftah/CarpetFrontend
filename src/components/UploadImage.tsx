@@ -15,7 +15,7 @@ export function UploadImage({onChange}: UploadImageProps) {
 
     return (
         <div
-            className="w-full w-full mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+            className="w-full mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
             <FileUpload onChange={handleFileUpload}/>
         </div>
     );

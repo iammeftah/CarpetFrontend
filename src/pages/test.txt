@@ -1,0 +1,390 @@
+import React, { useState, useEffect } from 'react';
+import { HeroParallax } from "../components/ui/hero-parallax";
+import Header from "../components/Header";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { Search, ChevronDown, ShoppingCart, X, ChevronsDown } from 'lucide-react';
+import ProductDetails from "../components/ProductDetails";
+import axios from 'axios';
+
+interface Product {
+    id: number;
+    Longueur: number;
+    Largeur: number;
+    couleur: string;
+    prix: string;
+    Disponabilite: boolean;
+    Etat: string;
+    Description: string;
+    Poids: number;
+    Model: string;
+    Qualite: string;
+    Matiere: string;
+    Titre: string;
+    reference: string;
+    Image: string;
+    updatedAt: string;
+    Category: Category;
+    SousCategories: SousCategory;
+    Types: Type;
+    commandes: Commande[];
+    promos: Promotion[];
+}
+
+interface Category {
+    id: number;
+    Nom: string;
+}
+
+interface SousCategory {
+    id: number;
+    Titre: string;
+}
+
+interface Type {
+    id: number;
+    Titre: string;
+}
+
+interface Commande {
+    id: number;
+    // Add other relevant fields from the Commande entity
+}
+
+interface Promotion {
+    id: number;
+    pourcentagePromo: number;
+    dateDebut: string;
+    dateFin: string;
+}
+
+// You may want to keep these interfaces if they're used elsewhere in your components
+interface Category1 {
+    id: number;
+    Nom: string;
+    sousCategories: SousCategory[];
+}
+
+interface SousCategory1 {
+    id: number;
+    Titre: string;
+    types: Type[];
+}
+
+interface EnhancedProductModalProps {
+    product: Product;
+    onClose: () => void;
+}
+
+
+export function TapisPage() {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [categories, setCategories] = useState<Category1[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [priceRange, setPriceRange] = useState([0, 6000]);
+    const [sortOption, setSortOption] = useState("");
+    const [showDialog, setShowDialog] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [activeDropdown, setActiveDropdown] = useState("");
+
+    useEffect(() => {
+        // Fetch products from the API
+        axios.get("http://localhost:8000/produits")
+            .then(response => {
+                console.log("API Response:", response.data);
+                setProducts(response.data);
+                setFilteredProducts(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching products:", error);
+            });
+
+        // Fetch categories from the API
+        axios.get("http://localhost:8000/home")
+            .then(response => {
+                console.log("Categories fetched:", response.data);
+                setCategories(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching categories:", error);
+            });
+    }, []);
+
+    useEffect(() => {
+        let result = products;
+
+        // Apply search filter
+        if (searchTerm) {
+            result = result.filter(product =>
+                product.Titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                product.Description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Apply category filter
+        if (selectedCategory) {
+            result = result.filter(product =>
+                (product.Category?.Nom === selectedCategory) ||
+                categories.find(c => c.Nom === selectedCategory)?.sousCategories.some(sc => sc.Titre === product.Category?.Nom)
+            );
+        }
+
+        // Apply price range filter
+        result = result.filter(product => {
+            const price = parseFloat(product.prix);
+            return price >= priceRange[0] && price <= priceRange[1];
+        });
+
+        // Apply sorting
+        if (sortOption === "price-asc") {
+            result.sort((a, b) => parseFloat(a.prix) - parseFloat(b.prix));
+        } else if (sortOption === "price-desc") {
+            result.sort((a, b) => parseFloat(b.prix) - parseFloat(a.prix));
+        }
+
+        setFilteredProducts(result);
+    }, [products, searchTerm, selectedCategory, priceRange, sortOption, categories]);
+
+    const toggleDropdown = (dropdown: string) => {
+        setActiveDropdown(activeDropdown === dropdown ? "" : dropdown);
+    };
+
+    const { scrollY } = useScroll();
+    const scrollIndicatorY = useTransform(scrollY, [0, 300], [0, 100]);
+    const scrollIndicatorOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+    const clearFilters = () => {
+        setSearchTerm("");
+        setSelectedCategory("");
+        setPriceRange([0, 6000]);
+        setSortOption("");
+    };
+
+    const heroProducts = products.slice(0, 10).map(product => ({
+        title: product.Titre,
+        link: '#gallery',
+        thumbnail: product.Image
+    }));
+
+    return (
+        <div className="bg-neutral-50 dark:bg-neutral-900 min-h-screen">
+            <Header />
+            <HeroParallax products={heroProducts} />
+            <motion.div
+                className="absolute bottom-10 transform text-neutral-800 dark:text-neutral-200 flex flex-col items-center w-full"
+                style={{
+                    y: scrollIndicatorY,
+                    opacity: scrollIndicatorOpacity,
+                }}
+            >
+                <motion.div
+                    animate={{
+                        y: [0, 10, 0],
+                    }}
+                    transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                    }}
+                >
+                    <span className="text-sm mb-2">Faites défiler vers le bas pour en savoir plus</span>
+                    <ChevronsDown className="h-6 w-6 mx-auto" />
+                </motion.div>
+            </motion.div>
+
+            <main id="gallery" className="container mx-auto px-4 py-16">
+                <h2 data-aos="fade-up" className="text-4xl font-bold text-center mb-12 text-neutral-800 dark:text-neutral-200">
+                    Notre Collection de Tapis
+                </h2>
+
+                <div className="mb-8">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-4 gap-4">
+                        <div className="relative w-full md:w-1/4">
+                            <input
+                                className="w-full bg-white dark:bg-neutral-800 outline-none rounded-xl border border-neutral-300 dark:border-neutral-700 px-4 py-2 pr-10 text-sm text-neutral-800 dark:text-neutral-200 transition-all duration-200"
+                                placeholder="Rechercher..."
+                                type="search"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500" />
+                        </div>
+                        <div className="flex gap-2 relative">
+                            {[
+                                { name: "Catégorie", options: categories.map(c => c.Nom) },
+                                { name: "Prix", options: ["0 MAD - 1000 MAD", "1000 MAD - 3000 MAD", "3000 MAD - 6000 MAD"] },
+                                { name: "Trier par", options: ["Prix: Croissant", "Prix: Décroissant"] }
+                            ].map((filter) => (
+                                <div key={filter.name} className="relative">
+                                    <button
+                                        onClick={() => toggleDropdown(filter.name)}
+                                        className="px-4 py-2 text-sm font-medium border border-neutral-300 dark:border-neutral-700 rounded-md bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-400 transition-all duration-300 flex items-center"
+                                    >
+                                        {filter.name} <ChevronDown className="ml-2 h-4 w-4" />
+                                    </button>
+                                    <AnimatePresence>
+                                        {activeDropdown === filter.name && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.2 }}
+                                                className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-neutral-800 ring-1 ring-black ring-opacity-5 overflow-hidden"
+                                            >
+                                                <div className="py-1 max-h-60 overflow-y-auto">
+                                                    {filter.options.map((option) => (
+                                                        <button
+                                                            key={option}
+                                                            onClick={() => {
+                                                                if (filter.name === "Catégorie") {
+                                                                    setSelectedCategory(option);
+                                                                } else if (filter.name === "Prix") {
+                                                                    const [min, max] = option.split(" - ").map(price => parseInt(price.replace(" MAD", "")));
+                                                                    setPriceRange([min, max]);
+                                                                } else if (filter.name === "Trier par") {
+                                                                    setSortOption(option === "Prix: Croissant" ? "price-asc" : "price-desc");
+                                                                }
+                                                                setActiveDropdown("");
+                                                            }}
+                                                            className="block w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                                                        >
+                                                            {option}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {(selectedCategory || priceRange[1] < 6000 || sortOption || searchTerm) && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="flex flex-wrap gap-2 mt-4"
+                        >
+                            {selectedCategory && (
+                                <div className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
+                                    {selectedCategory}
+                                    <button onClick={() => setSelectedCategory("")} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {priceRange[1] < 6000 && (
+                                <div className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
+                                    {priceRange[0]} MAD - {priceRange[1]} MAD
+                                    <button onClick={() => setPriceRange([0, 6000])} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {sortOption && (
+                                <div className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
+                                    {sortOption === "price-asc" ? "Prix: Croissant" : "Prix: Décroissant"}
+                                    <button onClick={() => setSortOption("")} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {searchTerm && (
+                                <div className="px-3 py-1 bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-full text-sm flex items-center">
+                                    Recherche: {searchTerm}
+                                    <button onClick={() => setSearchTerm("")} className="ml-2 focus:outline-none">
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            )}
+                            {(selectedCategory || priceRange[1] < 6000 || sortOption || searchTerm) && (
+                                <button
+                                    onClick={clearFilters}
+                                    className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 rounded-full text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-300"
+                                >
+                                    Effacer les filtres
+                                </button>
+                            )}
+                        </motion.div>
+                    )}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredProducts.map((product) => (
+                        <motion.div
+                            key={product.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="bg-white dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col"
+                        >
+                            <div className="relative h-64">
+                                <img
+                                    src={product.Image}
+                                    alt={product.Titre}
+                                    className="w-full h-full object-cover"
+                                />
+                                {product.promos && product.promos.length > 0 && (
+                                    <span className="absolute top-2 right-2 bg-neutral-800 text-white px-2 py-1 rounded text-sm">
+                                        {product.promos[0].pourcentagePromo}% OFF
+                                    </span>
+                                )}
+                                {product.Disponabilite === false && (
+                                    <span className="absolute top-2 left-2 bg-neutral-600 text-white px-2 py-1 rounded text-sm">
+                                        Rupture de stock
+                                    </span>
+                                )}
+                            </div>
+                            <div className="p-4 flex flex-col flex-grow">
+                                <h3 className="text-xl font-semibold mb-2 text-neutral-800 dark:text-neutral-200">{product.Titre}</h3>
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{product.Description}</p>
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-lg font-bold text-neutral-800 dark:text-neutral-200">{product.prix} MAD</span>
+                                    <span className={`text-sm ${product.Disponabilite !== false ? 'text-neutral-600' : 'text-neutral-400'}`}>
+                                        {product.Disponabilite !== false ? 'En stock' : 'Rupture de stock'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between items-center mb-4">
+                                    <span className="text-sm text-neutral-600 dark:text-neutral-400">{product.Matiere}</span>
+                                    <span className="text-sm text-neutral-600 dark:text-neutral-400">Qualité: {product.Qualite}</span>
+                                </div>
+                                <div className="mt-auto flex justify-between"> --
+                                    <button
+                                        onClick={() => {
+                                            console.log("Selected product:", product);
+                                            setSelectedProduct(product);
+                                            setShowDialog(true);
+                                        }}
+                                        className="px-4 py-2 text-sm rounded text-neutral-800 dark:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-600 transition-colors duration-300"
+                                    >
+                                        Voir les détails
+                                    </button>
+                                    <button
+                                        disabled={product.Disponabilite === false}
+                                        className={`px-4 py-2 text-sm rounded ${product.Disponabilite !== false ? 'bg-neutral-800 dark:bg-neutral-200 text-white dark:text-black hover:bg-neutral-700' : 'bg-neutral-400 text-neutral-600 cursor-not-allowed'} transition-colors duration-300`}
+                                    >
+                                        <ShoppingCart className="inline-block mr-2 h-4 w-4"/>
+                                        {product.Disponabilite !== false ? 'Ajouter au panier' : 'Indisponible'}
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </main>
+
+            <AnimatePresence>
+                {showDialog && selectedProduct && (
+                    <ProductDetails
+                        product={selectedProduct}
+                        onClose={() => setShowDialog(false)}
+                    />
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
