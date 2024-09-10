@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AuroraBackground } from "../components/ui/aurora-background";
 import Header from "../components/Header";
 import axios from "axios";
+import { environment } from "../environments/environment";
 
 interface Product {
     id: number;
@@ -43,7 +44,7 @@ export function Homepage() {
 
     useEffect(() => {
         // Fetch products from the API
-        axios.get("http://localhost:8000/produits")
+        axios.get(`${environment.baseUrl}/produits`)
             .then(response => {
                 setProducts(response.data);
             })
@@ -52,7 +53,7 @@ export function Homepage() {
             });
 
         // Fetch categories from the API
-        axios.get("http://localhost:8000/home")
+        axios.get(`${environment.baseUrl}/home`)
             .then(response => {
                 setCategories(response.data);
             })

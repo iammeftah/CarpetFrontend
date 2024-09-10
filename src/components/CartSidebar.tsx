@@ -1,7 +1,9 @@
 import React from 'react';
+import axios from 'axios';
 
-interface Product {
+interface CartItem {
     id: number;
+    productId: number;
     name: string;
     price: number;
     quantity: number;
@@ -10,11 +12,21 @@ interface Product {
 interface CartSidebarProps {
     isOpen: boolean;
     onClose: () => void;
-    products: Product[];
+    products: CartItem[];
+    onProductRemoved: () => void;
 }
 
-const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, products }) => {
+const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, products, onProductRemoved }) => {
     const total = products.reduce((sum, product) => sum + product.price * product.quantity, 0);
+
+    const removeFromCart = async (productId: number) => {
+        try {
+            await axios.post('http://localhost:8000/api/cart/remove', { productId });
+            onProductRemoved(); // Callback to refresh cart data in parent component
+        } catch (error) {
+            console.error('Error removing from cart:', error);
+        }
+    };
 
     return (
         <div className={`fixed z-50 top-0 right-0 h-full w-full md:w-1/4 bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-50 backdrop-blur-md shadow-lg transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out overflow-y-auto`}>
@@ -35,7 +47,15 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, products }) 
                                     <h3 className="font-semibold text-black dark:text-white">{product.name}</h3>
                                     <p className="text-sm text-black dark:text-white opacity-70">Quantité: {product.quantity}</p>
                                 </div>
-                                <p className="text-black dark:text-white">{product.price * product.quantity}MAD</p>
+                                <div>
+                                    <p className="text-black dark:text-white">{product.price * product.quantity}MAD</p>
+                                    <button
+                                        onClick={() => removeFromCart(product.productId)}
+                                        className="text-red-500 text-sm mt-1 hover:text-red-700"
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
                             </div>
                         ))}
                         <div className="mt-6 pt-6 border-t border-black dark:border-white border-opacity-20">
